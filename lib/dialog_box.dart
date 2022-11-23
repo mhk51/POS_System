@@ -17,7 +17,7 @@ class DialogBox extends StatefulWidget {
 class _DialogBoxState extends State<DialogBox> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String itemName = "";
-  int itemPrice = 0;
+  double itemPrice = 0;
 
   @override
   void initState() {
@@ -70,27 +70,23 @@ class _DialogBoxState extends State<DialogBox> {
                   onChanged: (value) {
                     itemName = value;
                   },
-                  decoration:
-                      textfieldDecoration.copyWith(labelText: 'Item Name'),
+                  decoration: textfieldDecoration.copyWith(labelText: 'Item Name'),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: TextFormField(
-                  initialValue: widget.item != null
-                      ? widget.item!.price.toString()
-                      : null,
+                  initialValue: widget.item != null ? widget.item!.price.toString() : null,
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     return value!.isNotEmpty ? null : "Invalid Field";
                   },
                   onChanged: (value) {
                     try {
-                      itemPrice = int.parse(value);
+                      itemPrice = double.parse(value);
                     } catch (e) {}
                   },
-                  decoration:
-                      textfieldDecoration.copyWith(labelText: 'Item Price'),
+                  decoration: textfieldDecoration.copyWith(labelText: 'Item Price'),
                 ),
               ),
             ],
