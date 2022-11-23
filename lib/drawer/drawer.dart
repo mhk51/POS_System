@@ -1,8 +1,8 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:scanner_app/drawer_item.dart';
-import 'package:scanner_app/routes.dart';
+import 'package:scanner_app/drawer/drawer_item.dart';
+import 'package:scanner_app/pages/routes.dart';
 
 class NavDrawer extends StatefulWidget {
   const NavDrawer({super.key});

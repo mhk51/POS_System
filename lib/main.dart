@@ -6,7 +6,7 @@ import 'package:scanner_app/pages/items_page.dart';
 import 'package:scanner_app/pages/receipts_page.dart';
 import 'package:scanner_app/pages/sales_pages.dart';
 import 'package:scanner_app/pages/settings_page.dart';
-import 'package:scanner_app/routes.dart';
+import 'package:scanner_app/pages/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

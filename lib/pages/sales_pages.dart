@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scanner_app/drawer.dart';
+import 'package:scanner_app/drawer/drawer.dart';
 
 class SalesPage extends StatefulWidget {
   static const String routeName = "/sales";

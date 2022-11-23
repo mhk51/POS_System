@@ -1,4 +1,4 @@
-import 'package:scanner_app/item.dart';
+import 'package:scanner_app/models/item.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Services {
@@ -33,7 +33,8 @@ class Services {
 
   static Future<void> insertItem(Item item) async {
     final db = await database;
-    await db.insert('items', item.toMap(), conflictAlgorithm: ConflictAlgorithm.replace);
+    await db.insert('items', item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   static Future<List<Item>> getAllItems() async {

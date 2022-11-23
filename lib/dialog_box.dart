@@ -3,8 +3,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:scanner_app/constants.dart';
-import 'package:scanner_app/item.dart';
+import 'package:scanner_app/shared/constants.dart';
+import 'package:scanner_app/models/item.dart';
 
 class DialogBox extends StatefulWidget {
   final Item? item;
@@ -70,13 +70,16 @@ class _DialogBoxState extends State<DialogBox> {
                   onChanged: (value) {
                     itemName = value;
                   },
-                  decoration: textfieldDecoration.copyWith(labelText: 'Item Name'),
+                  decoration:
+                      textfieldDecoration.copyWith(labelText: 'Item Name'),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 15),
                 child: TextFormField(
-                  initialValue: widget.item != null ? widget.item!.price.toString() : null,
+                  initialValue: widget.item != null
+                      ? widget.item!.price.toString()
+                      : null,
                   keyboardType: TextInputType.number,
                   validator: (value) {
                     return value!.isNotEmpty ? null : "Invalid Field";
@@ -86,7 +89,8 @@ class _DialogBoxState extends State<DialogBox> {
                       itemPrice = double.parse(value);
                     } catch (e) {}
                   },
-                  decoration: textfieldDecoration.copyWith(labelText: 'Item Price'),
+                  decoration:
+                      textfieldDecoration.copyWith(labelText: 'Item Price'),
                 ),
               ),
             ],

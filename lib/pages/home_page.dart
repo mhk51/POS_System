@@ -5,10 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:intl/intl.dart';
 import 'package:scanner_app/dialog_box.dart';
-import 'package:scanner_app/drawer.dart';
-import 'package:scanner_app/item.dart';
-import 'package:scanner_app/loading.dart';
-import 'package:scanner_app/services.dart';
+import 'package:scanner_app/drawer/drawer.dart';
+import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/shared/loading.dart';
+import 'package:scanner_app/services/services.dart';
 
 class HomePage extends StatefulWidget {
   static const String routeName = '/home';
@@ -24,8 +24,8 @@ class _HomePageState extends State<HomePage> {
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes;
     try {
-      barcodeScanRes =
-          await FlutterBarcodeScanner.scanBarcode('#ff6666', 'Cancel', true, ScanMode.BARCODE);
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
       print(barcodeScanRes);
     } on PlatformException {
       barcodeScanRes = 'Failed to get platform version.';
