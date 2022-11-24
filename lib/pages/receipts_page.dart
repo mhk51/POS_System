@@ -16,6 +16,7 @@ class _ReceiptsPageState extends State<ReceiptsPage> {
       drawer: const NavDrawer(),
       appBar: AppBar(
         title: const Text('Receipts Page'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }

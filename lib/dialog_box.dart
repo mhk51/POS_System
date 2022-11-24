@@ -99,6 +99,7 @@ class _DialogBoxState extends State<DialogBox> {
         TextButton(
             onPressed: () {
               Item item = Item(
+                currency: Currency.LPB,
                 barcode: widget.item != null
                     ? widget.item!.barcode
                     : Random().nextInt(100000).toString(),

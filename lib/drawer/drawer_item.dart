@@ -15,21 +15,35 @@ class DrawerBodyItem extends StatelessWidget {
     String? pageRouteName = ModalRoute.of(context)?.settings.name;
     Color? selectedColor =
         pageRouteName == routeName ? Theme.of(context).primaryColor : null;
-    return ListTile(
-      tileColor: pageRouteName == routeName ? Colors.grey[300] : null,
-      title: Row(
-        children: <Widget>[
-          Icon(icon, color: selectedColor),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              text,
-              style: TextStyle(color: selectedColor),
+    return Container(
+      margin: const EdgeInsets.all(3.0),
+      child: ListTile(
+          tileColor: pageRouteName == routeName ? Colors.grey[300] : null,
+          title: Container(
+            margin: const EdgeInsets.all(10.0),
+            child: Row(
+              children: <Widget>[
+                Icon(
+                  icon,
+                  color: selectedColor,
+                  size: 25,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      color: selectedColor,
+                      fontSize: 15,
+                    ),
+                  ),
+                )
+              ],
             ),
-          )
-        ],
-      ),
-      onTap: () => Navigator.pushReplacementNamed(context, routeName),
+          ),
+          onTap: () {
+            Navigator.pushReplacementNamed(context, routeName);
+          }),
     );
   }
 }

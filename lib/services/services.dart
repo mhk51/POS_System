@@ -15,7 +15,7 @@ class Services {
 
   static Future<void> dropTable() async {
     final db = await database;
-    db.delete('items');
+    await db.delete('items');
   }
 
   static List<Item> itemsListfromMaps(List<Map<String, dynamic>> maps) {
@@ -23,6 +23,7 @@ class Services {
       maps.length,
       (i) {
         return Item(
+          currency: maps[i]['currency'],
           barcode: maps[i]['barcode'],
           name: maps[i]['name'],
           price: maps[i]['price'],

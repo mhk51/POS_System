@@ -16,6 +16,7 @@ class _SettingsPageState extends State<SettingsPage> {
       drawer: const NavDrawer(),
       appBar: AppBar(
         title: const Text('Settings Page'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }

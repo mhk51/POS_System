@@ -54,11 +54,6 @@ class _NavDrawerState extends State<NavDrawer> {
             ),
           ),
           const DrawerBodyItem(
-            icon: Icons.home,
-            text: 'Home',
-            routeName: PageRoutes.home,
-          ),
-          const DrawerBodyItem(
             icon: Icons.shopping_basket_sharp,
             text: 'Sales',
             routeName: PageRoutes.sales,
@@ -77,6 +72,17 @@ class _NavDrawerState extends State<NavDrawer> {
             icon: Icons.category,
             text: 'Categories',
             routeName: PageRoutes.categories,
+          ),
+          const Divider(),
+          const DrawerBodyItem(
+            icon: Icons.bar_chart_rounded,
+            text: 'Back Office',
+            routeName: PageRoutes.backOffice,
+          ),
+          const DrawerBodyItem(
+            icon: Icons.info_outline_rounded,
+            text: 'Support',
+            routeName: PageRoutes.support,
           ),
           const DrawerBodyItem(
             icon: Icons.settings,

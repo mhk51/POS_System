@@ -16,6 +16,7 @@ class _SalesPageState extends State<SalesPage> {
       drawer: const NavDrawer(),
       appBar: AppBar(
         title: const Text('Sales Page'),
+        backgroundColor: Theme.of(context).primaryColor,
       ),
     );
   }
