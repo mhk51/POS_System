@@ -1,19 +1,20 @@
 // ignore_for_file: avoid_print
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:scanner_app/pages/add_category.dart';
+import 'package:scanner_app/pages/add_item/add_item.dart';
 import 'package:scanner_app/pages/back_office_page.dart';
 import 'package:scanner_app/pages/categories_page.dart';
-import 'package:scanner_app/pages/items_page.dart';
+import 'package:scanner_app/pages/items_page/items_page.dart';
 import 'package:scanner_app/pages/receipts_page.dart';
 import 'package:scanner_app/pages/sales_pages.dart';
 import 'package:scanner_app/pages/settings_page.dart';
 import 'package:scanner_app/pages/routes.dart';
 import 'package:scanner_app/pages/support_page.dart';
-import 'package:scanner_app/services/categories_services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await CategoriesServices.dropTable();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         PageRoutes.support: (context) => const SupportPage(),
         PageRoutes.backOffice: (context) => const BackOfficePage(),
         PageRoutes.addCategory: (context) => const AddCategory(),
+        PageRoutes.addItem: (context) => const AddItem(),
       },
     );
   }

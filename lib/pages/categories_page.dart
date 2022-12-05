@@ -31,7 +31,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             },
             leading: Icon(
               Icons.circle,
-              color: Color(category.color),
+              color: category.color,
               size: 55,
             ),
             title: Text(
@@ -56,10 +56,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
         title: const Text('Categorie Page'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: FutureBuilder(
-        future: CategoriesServices.getAllCategories(),
+      body: StreamBuilder(
+        stream: CategoriesServices.categories,
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
+          if (snapshot.connectionState == ConnectionState.active &&
               !snapshot.hasError) {
             List<Category> data = snapshot.data!;
             return Center(

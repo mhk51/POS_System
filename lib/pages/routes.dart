@@ -1,7 +1,8 @@
 import 'package:scanner_app/pages/add_category.dart';
+import 'package:scanner_app/pages/add_item/add_item.dart';
 import 'package:scanner_app/pages/back_office_page.dart';
 import 'package:scanner_app/pages/categories_page.dart';
-import 'package:scanner_app/pages/items_page.dart';
+import 'package:scanner_app/pages/items_page/items_page.dart';
 import 'package:scanner_app/pages/receipts_page.dart';
 import 'package:scanner_app/pages/sales_pages.dart';
 import 'package:scanner_app/pages/settings_page.dart';
@@ -16,4 +17,5 @@ class PageRoutes {
   static const String support = SupportPage.routeName;
   static const String backOffice = BackOfficePage.routeName;
   static const String addCategory = AddCategory.routeName;
+  static const String addItem = AddItem.routeName;
 }
