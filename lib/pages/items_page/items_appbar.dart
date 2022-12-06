@@ -7,7 +7,7 @@ import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/search_class.dart';
 import 'package:scanner_app/pages/items_page/category_dropdown.dart';
-import 'package:scanner_app/pages/routes.dart';
+import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/services/items_services.dart';
 
 // ignore: must_be_immutable

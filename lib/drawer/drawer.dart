@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:scanner_app/drawer/drawer_item.dart';
-import 'package:scanner_app/pages/routes.dart';
+import 'package:scanner_app/shared/routes.dart';
 
 class NavDrawer extends StatefulWidget {
   const NavDrawer({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:scanner_app/models/item.dart';
-import 'package:scanner_app/pages/routes.dart';
+import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/services/items_services.dart';
 
 class ItemTile extends StatelessWidget {

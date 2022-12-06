@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scanner_app/drawer/drawer.dart';
 import 'package:scanner_app/models/category.dart';
-import 'package:scanner_app/pages/routes.dart';
+import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/services/categories_services.dart';
 import 'package:scanner_app/shared/loading.dart';
 
