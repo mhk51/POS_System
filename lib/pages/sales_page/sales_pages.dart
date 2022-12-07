@@ -81,7 +81,7 @@ class _SalesPageState extends State<SalesPage> {
                                           ),
                                           Positioned(
                                             top: 3.0,
-                                            right: 5.0,
+                                            right: 6.0,
                                             child: Center(
                                               child: Text(
                                                 ticket.itemCount.toString(),

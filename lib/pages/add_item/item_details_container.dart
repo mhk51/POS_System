@@ -19,6 +19,8 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
   FocusNode priceFocus = FocusNode();
   FocusNode barcodeFocus = FocusNode();
 
+  TextEditingController barcodeTextController = TextEditingController();
+
   void _requestFocusName() {
     setState(() {
       FocusScope.of(context).requestFocus(nameFocus);
@@ -63,7 +65,9 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
   @override
   Widget build(BuildContext context) {
     Item item = Provider.of<Item>(context);
-
+    if (item.barcode != null) {
+      barcodeTextController.text = item.barcode!;
+    }
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
@@ -124,7 +128,6 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
             ),
             const SizedBox(height: 20),
             TextFormField(
-              initialValue: item.barcode,
               validator: (value) {
                 return value!.isNotEmpty ? null : "Please Enter a Barcode";
               },
@@ -132,9 +135,12 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
                 item.updateBarcode(value);
               },
               focusNode: barcodeFocus,
+              controller: barcodeTextController,
               onTap: _requestFocusBarcode,
-              decoration: inputDecoration('Barcode', barcodeFocus)
-                  .copyWith(suffixIcon: const BarcodeButton()),
+              decoration: inputDecoration('Barcode', barcodeFocus).copyWith(
+                  suffixIcon: BarcodeButton(
+                barcodeTextController: barcodeTextController,
+              )),
             ),
           ],
         ),

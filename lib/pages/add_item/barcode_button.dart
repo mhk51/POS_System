@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:scanner_app/models/item.dart';
 
 class BarcodeButton extends StatefulWidget {
-  const BarcodeButton({super.key});
+  final TextEditingController barcodeTextController;
+  const BarcodeButton({super.key, required this.barcodeTextController});
 
   @override
   State<BarcodeButton> createState() => _BarcodeButtonState();
@@ -32,6 +33,7 @@ class _BarcodeButtonState extends State<BarcodeButton> {
         }
         if (!mounted) return;
         item.updateBarcode(barcodeScanRes);
+        widget.barcodeTextController.text = barcodeScanRes;
       },
       splashColor: Theme.of(context).primaryColor,
     );
