@@ -44,7 +44,8 @@ class ChargeButton extends StatelessWidget {
                 )
               : TextButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, PageRoutes.cashOut);
+                    Navigator.pushNamed(context, PageRoutes.cashOut,
+                        arguments: ticket);
                   },
                   child: Column(
                     children: [

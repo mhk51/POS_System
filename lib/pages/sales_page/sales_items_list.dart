@@ -34,20 +34,22 @@ class SalesItemsList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SizedBox(
         height: 400,
-        child: ListView.separated(
-          itemCount: filteredItems.length,
-          itemBuilder: (context, index) {
-            return SalesItemTile(item: filteredItems[index]);
-          },
-          separatorBuilder: (context, index) {
-            return const Padding(
-              padding: EdgeInsets.only(left: 70.0),
-              child: Divider(
-                thickness: 1,
-              ),
-            );
-          },
-        ),
+        child: ticket.searchMode
+            ? ListView.separated(
+                itemCount: filteredItems.length,
+                itemBuilder: (context, index) {
+                  return SalesItemTile(item: filteredItems[index]);
+                },
+                separatorBuilder: (context, index) {
+                  return const Padding(
+                    padding: EdgeInsets.only(left: 70.0),
+                    child: Divider(
+                      thickness: 1,
+                    ),
+                  );
+                },
+              )
+            : Container(),
       ),
     );
   }

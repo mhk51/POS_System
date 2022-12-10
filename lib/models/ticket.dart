@@ -6,8 +6,10 @@ class Ticket extends ChangeNotifier {
   int itemCount;
   int totalCost;
   List<Item> items = [];
+  List<int> itemQty = [];
   String searchWord;
   Category? category;
+  bool searchMode = false;
 
   Ticket({this.itemCount = 0, this.totalCost = 0, this.searchWord = ""});
 
@@ -28,10 +30,19 @@ class Ticket extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateSearchMode(bool searchMode) {
+    this.searchMode = searchMode;
+    notifyListeners();
+  }
+
   void addItem(Item item) {
     items.add(item);
     itemCount++;
     totalCost += item.price!;
     notifyListeners();
+  }
+
+  Map<String, dynamic> toMap() {
+    return {"totalCost": totalCost, "items": items.map((e) => e.name).toList()};
   }
 }

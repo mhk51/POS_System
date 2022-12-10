@@ -66,6 +66,7 @@ class _ControlBarState extends State<ControlBar> {
                     setState(() {
                       _searchBool = false;
                     });
+                    ticket.updateSearchMode(false);
                   },
                 ),
               ),
@@ -104,7 +105,7 @@ class _ControlBarState extends State<ControlBar> {
                         return;
                       }
                       if (!mounted) return;
-                      List<Item> items = Provider.of(context);
+                      List<Item> items = Provider.of(context, listen: false);
                       Item? item;
                       for (Item elem in items) {
                         if (barcode == elem.barcode) {
@@ -114,6 +115,13 @@ class _ControlBarState extends State<ControlBar> {
                       }
                       if (item != null) {
                         ticket.addItem(item);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog();
+                          },
+                        );
                       }
                     },
                     icon: const Icon(
@@ -129,6 +137,7 @@ class _ControlBarState extends State<ControlBar> {
                       setState(() {
                         _searchBool = true;
                       });
+                      ticket.updateSearchMode(true);
                     },
                     icon: const Icon(
                       Icons.search,
