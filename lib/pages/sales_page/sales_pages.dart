@@ -33,19 +33,19 @@ class _SalesPageState extends State<SalesPage> {
     return {"categories": categories, "items": items};
   }
 
+  Ticket? ticket;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Map<String, dynamic>>(
         future: getInfo(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              !snapshot.hasError) {
+          if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
             List<Category?> categories = snapshot.data!['categories'];
             List<Item> items = snapshot.data!['items'];
             return MultiProvider(
                 providers: [
                   ChangeNotifierProvider.value(
-                    value: Ticket(),
+                    value: ticket ??= Ticket(),
                   ),
                   Provider.value(value: items),
                   Provider.value(value: categories),

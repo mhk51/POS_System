@@ -5,18 +5,19 @@ import 'package:scanner_app/models/item.dart';
 class Ticket extends ChangeNotifier {
   int itemCount;
   int totalCost;
-  List<Item> items = [];
   List<int> itemQty = [];
   String searchWord;
   Category? category;
   bool searchMode = false;
+
+  Map<Item, int> items = {};
 
   Ticket({this.itemCount = 0, this.totalCost = 0, this.searchWord = ""});
 
   void clear() {
     itemCount = 0;
     totalCost = 0;
-    items = [];
+    items = {};
     notifyListeners();
   }
 
@@ -36,13 +37,58 @@ class Ticket extends ChangeNotifier {
   }
 
   void addItem(Item item) {
-    items.add(item);
+    if (items.containsKey(item)) {
+      items[item] = items[item]! + 1;
+    } else {
+      items[item] = 1;
+    }
     itemCount++;
     totalCost += item.price!;
     notifyListeners();
   }
 
+  void incrementItem(Item item) {
+    items[item] = items[item]! + 1;
+    itemCount++;
+    totalCost += item.price!;
+    notifyListeners();
+  }
+
+  void decrementItem(Item item) {
+    if (items[item]! > 1) {
+      items[item] = items[item]! - 1;
+      itemCount--;
+      totalCost -= item.price!;
+      notifyListeners();
+    }
+  }
+
+  void setItemQuantity(Item item, int qty) {
+    int oldQty = items[item]!;
+    items[item] = qty;
+    itemCount += qty - oldQty;
+    totalCost += (qty - oldQty) * item.price!;
+    notifyListeners();
+  }
+
+  void removeItem(Item item) {
+    int qty = items[item]!;
+    items.remove(item);
+    itemCount -= qty;
+    totalCost -= (item.price! * qty);
+    notifyListeners();
+  }
+
   Map<String, dynamic> toMap() {
-    return {"totalCost": totalCost, "items": items.map((e) => e.name).toList()};
+    return {
+      "totalCost": totalCost,
+      "items": items.map(
+        (item, qty) {
+          Map<String, dynamic> data = item.toMap();
+          data.addAll({'qty': qty});
+          return MapEntry(item.name, data);
+        },
+      ),
+    };
   }
 }

@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/ticket.dart';
+import 'package:scanner_app/pages/items_page/item_tile.dart';
+import 'package:scanner_app/pages/sales_page/sales_item_tile.dart';
 
 class ControlBar extends StatefulWidget {
   const ControlBar({super.key});
@@ -32,6 +35,7 @@ class _ControlBarState extends State<ControlBar> {
   @override
   Widget build(BuildContext context) {
     List<Category?> categories = Provider.of(context);
+    List<Item> items = Provider.of(context);
     Ticket ticket = Provider.of(context);
     return SizedBox(
       height: 70,
@@ -119,7 +123,7 @@ class _ControlBarState extends State<ControlBar> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return AlertDialog();
+                            return const AlertDialog();
                           },
                         );
                       }
@@ -134,10 +138,10 @@ class _ControlBarState extends State<ControlBar> {
                   flex: 1,
                   child: IconButton(
                     onPressed: () {
-                      setState(() {
-                        _searchBool = true;
-                      });
-                      ticket.updateSearchMode(true);
+                      showSearch(
+                        context: context,
+                        delegate: CustomSearchDelegate(items: items),
+                      );
                     },
                     icon: const Icon(
                       Icons.search,
@@ -147,6 +151,92 @@ class _ControlBarState extends State<ControlBar> {
                 ),
               ],
             ),
+    );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  final List<Item> items;
+  CustomSearchDelegate({required this.items});
+
+  Widget tilefromItem(Item item) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        onTap: () async {},
+        leading: SizedBox(
+          height: double.infinity,
+          width: 60,
+          child: item.image == null
+              ? Icon(
+                  item.shape,
+                  color: item.color,
+                  size: 40,
+                )
+              : CircleAvatar(
+                  backgroundImage: FileImage(item.image!),
+                  radius: 20,
+                ),
+        ),
+        title: Text(
+          item.name!,
+          style: const TextStyle(color: Colors.black, fontSize: 20),
+        ),
+        trailing: Text(
+          '${NumberFormat('###,###.##').format(item.price)} L.L',
+          style: const TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      )
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return null;
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    List<Item> matchQuery = [];
+    for (Item item in items) {
+      if (item.name!.toLowerCase().startsWith(query.toLowerCase())) {
+        matchQuery.add(item);
+      }
+    }
+    return ListView(
+      children: matchQuery.map(tilefromItem).toList(),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    List<Item> matchQuery = [];
+    for (Item item in items) {
+      if (item.name!.toLowerCase().startsWith(query.toLowerCase())) {
+        matchQuery.add(item);
+      }
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: ListView(
+        children: matchQuery.map(tilefromItem).toList(),
+      ),
     );
   }
 }
