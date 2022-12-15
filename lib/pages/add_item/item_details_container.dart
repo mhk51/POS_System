@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/category.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/pages/add_item/barcode_button.dart';
 import 'package:scanner_app/pages/add_item/item_category_dropdown.dart';
 
@@ -64,7 +64,7 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
 
   @override
   Widget build(BuildContext context) {
-    Item item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of<ItemBuilder>(context);
     if (item.barcode != null) {
       barcodeTextController.text = item.barcode!;
     }

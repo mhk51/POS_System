@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/category.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/pages/add_item/delete_item.dart';
 import 'package:scanner_app/pages/add_item/item_representation.dart';
 import 'package:scanner_app/pages/add_item/stock_container.dart';
@@ -21,7 +21,8 @@ class AddItem extends StatefulWidget {
 
 class _AddItemState extends State<AddItem> {
   Future<Map<String, dynamic>> getItemData() async {
-    Item? data = ModalRoute.of(context)!.settings.arguments as Item?;
+    ItemBuilder? data =
+        ModalRoute.of(context)!.settings.arguments as ItemBuilder?;
     List<Future> futures = [
       CategoriesServices.getAllCategories(),
     ];
@@ -30,7 +31,7 @@ class _AddItemState extends State<AddItem> {
     }
     List reponses = await Future.wait(futures);
     List<Category> categories = reponses[0];
-    Item? itemResponse;
+    ItemBuilder? itemResponse;
     if (data != null) {
       itemResponse = reponses[1];
     }
@@ -48,15 +49,15 @@ class _AddItemState extends State<AddItem> {
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> map = snapshot.data!;
             List<Category> categories = map['categories'];
-            Item? itemArg = map['item'];
+            ItemBuilder? itemArg = map['item'];
             return MultiProvider(
               providers: [
                 ChangeNotifierProvider.value(
-                  value: itemArg ?? Item(),
+                  value: itemArg ?? ItemBuilder(),
                 ),
               ],
               builder: (context, snapshot) {
-                Item item = Provider.of<Item>(context);
+                ItemBuilder item = Provider.of<ItemBuilder>(context);
                 return Scaffold(
                   appBar: AppBar(
                     title: Text(itemArg == null ? "Add Item" : "Edit Item"),

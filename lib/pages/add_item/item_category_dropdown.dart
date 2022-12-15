@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/category.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 
 class CategoryDropDown extends StatefulWidget {
   final List<Category> categories;
@@ -16,7 +16,7 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
 
   @override
   Widget build(BuildContext context) {
-    Item item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of<ItemBuilder>(context);
     dropdownValue = item.category;
     DropdownMenuItem<Category?> dropDownMenuItem = DropdownMenuItem<Category?>(
       value: null,

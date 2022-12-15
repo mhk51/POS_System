@@ -5,6 +5,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/models/search_class.dart';
 import 'package:scanner_app/pages/items_page/category_dropdown.dart';
 import 'package:scanner_app/shared/routes.dart';
@@ -79,7 +80,11 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
                     return;
                   }
                   Item? item = await ItemServices.getItem(barcode);
-                  item ??= Item(barcode: null);
+                  ItemBuilder? itemBuilder;
+                  if (item != null) {
+                    itemBuilder = ItemBuilder.fromItem(item);
+                  }
+                  itemBuilder ??= ItemBuilder(barcode: null);
                   if (!mounted) return;
                   Item? updatedItem = await Navigator.pushNamed(
                       context, PageRoutes.addItem,

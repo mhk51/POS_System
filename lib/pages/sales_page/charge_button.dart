@@ -15,7 +15,10 @@ class ChargeButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
         child: Container(
-          color: Theme.of(context).cardColor,
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
           width: double.infinity,
           child: ticket.itemCount == 0
               ? Padding(

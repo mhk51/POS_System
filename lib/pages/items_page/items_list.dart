@@ -16,7 +16,7 @@ class _ItemsListState extends State<ItemsList> {
   List<Item> filterSearchResults(String query, List<Item> items) {
     List<Item> returnList = [];
     for (Item item in items) {
-      if (item.name!.startsWith(query)) {
+      if (item.name.startsWith(query)) {
         returnList.add(item);
       }
     }

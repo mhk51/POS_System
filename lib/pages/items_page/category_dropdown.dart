@@ -48,18 +48,20 @@ class _FilterDropDownState extends State<FilterDropDown> {
     list.add(null);
     List<DropdownMenuItem<Category?>> categoriesDropDown =
         list.map(dropDownfromCategory).toList();
-    return DropdownButton<Category?>(
-      isExpanded: false,
-      icon: const Icon(
-        Icons.arrow_drop_down,
-        color: Colors.white,
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<Category?>(
+        isExpanded: false,
+        icon: const Icon(
+          Icons.arrow_drop_down,
+          color: Colors.white,
+        ),
+        value: widget.selectedValue,
+        items: categoriesDropDown,
+        onChanged: widget.onChanged,
+        selectedItemBuilder: (context) {
+          return list.map(representionFromCategory).toList();
+        },
       ),
-      value: widget.selectedValue,
-      items: categoriesDropDown,
-      onChanged: widget.onChanged,
-      selectedItemBuilder: (context) {
-        return list.map(representionFromCategory).toList();
-      },
     );
   }
 }

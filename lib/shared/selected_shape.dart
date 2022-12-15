@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 
 class SelectedShape extends StatefulWidget {
   const SelectedShape({super.key});
@@ -37,7 +38,7 @@ class _SelectedShapeState extends State<SelectedShape> {
   }
 
   Stack selectableShape(int index) {
-    Item item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of<ItemBuilder>(context);
     return Stack(
       alignment: Alignment.center,
       children: [

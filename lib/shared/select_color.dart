@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 
 class SelectColor extends StatefulWidget {
   final Function(Color color)? setSelectedColor;
@@ -26,9 +26,9 @@ class _SelectColorState extends State<SelectColor> {
   Color selectedColor = Colors.grey;
 
   ElevatedButton textButtonFromColor(Color color) {
-    Item? item;
+    ItemBuilder? item;
     try {
-      item = Provider.of<Item>(context);
+      item = Provider.of<ItemBuilder>(context);
       selectedColor = item.color;
     } catch (e) {
       item == null;

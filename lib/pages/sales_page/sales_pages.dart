@@ -4,8 +4,10 @@ import 'package:scanner_app/drawer/drawer.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/ticket.dart';
+import 'package:scanner_app/pages/sales_page/cart_icon.dart';
 import 'package:scanner_app/pages/sales_page/charge_button.dart';
-import 'package:scanner_app/pages/sales_page/items_container.dart';
+import 'package:scanner_app/pages/sales_page/control_bar.dart';
+import 'package:scanner_app/pages/sales_page/sales_item_grid.dart';
 import 'package:scanner_app/services/categories_services.dart';
 import 'package:scanner_app/services/items_services.dart';
 import 'package:scanner_app/shared/loading.dart';
@@ -39,7 +41,8 @@ class _SalesPageState extends State<SalesPage> {
     return FutureBuilder<Map<String, dynamic>>(
         future: getInfo(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done && !snapshot.hasError) {
+          if (snapshot.connectionState == ConnectionState.done &&
+              !snapshot.hasError) {
             List<Category?> categories = snapshot.data!['categories'];
             List<Item> items = snapshot.data!['items'];
             return MultiProvider(
@@ -56,69 +59,46 @@ class _SalesPageState extends State<SalesPage> {
                     drawer: const NavDrawer(),
                     appBar: AppBar(
                       title: Row(
-                        children: [
-                          const Text('Cart'),
-                          const SizedBox(width: 10),
-                          Stack(
-                            children: <Widget>[
-                              const IconButton(
-                                icon: Icon(
-                                  Icons.shopping_cart,
-                                  color: Colors.white,
-                                ),
-                                onPressed: null,
-                              ),
-                              ticket.itemCount == 0
-                                  ? Container()
-                                  : Positioned(
-                                      left: 30,
-                                      child: Stack(
-                                        children: <Widget>[
-                                          Icon(
-                                            Icons.brightness_1,
-                                            size: 20.0,
-                                            color: Colors.green[800],
-                                          ),
-                                          Positioned(
-                                            top: 3.0,
-                                            right: 6.0,
-                                            child: Center(
-                                              child: Text(
-                                                ticket.itemCount.toString(),
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 11.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                            ],
-                          ),
+                        children: const [
+                          Text('Cart'),
+                          SizedBox(width: 10),
+                          CartIcon(),
                         ],
                       ),
                       actions: [
-                        PopupMenuButton(
-                          color: Colors.white,
-                          itemBuilder: ((context) {
-                            return [
-                              PopupMenuItem(
-                                value: 0,
-                                child: ListTile(
-                                  leading: const Icon(Icons.delete),
-                                  onTap: () {
-                                    ticket.clear();
-                                    Navigator.pop(context);
-                                  },
-                                  title: const Text('Clear Ticket'),
-                                ),
-                              ),
-                            ];
-                          }),
-                        )
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: IconButton(
+                            onPressed: () async {
+                              bool? answer = await showDialog<bool>(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    content: const Text(
+                                        'Are you sure you want to clear all items ?'),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, false);
+                                          },
+                                          child: const Text('No')),
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context, true);
+                                          },
+                                          child: const Text('Yes'))
+                                    ],
+                                  );
+                                },
+                              );
+                              if (answer != null && answer) {
+                                ticket.clear();
+                              }
+                            },
+                            icon: const Icon(Icons.delete),
+                          ),
+                        ),
                       ],
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
@@ -126,9 +106,10 @@ class _SalesPageState extends State<SalesPage> {
                       child: Center(
                         child: Column(
                           children: const [
+                            ControlBar(),
                             ChargeButton(),
-                            Divider(height: 0, thickness: 2),
-                            ItemsContainer(),
+                            // Divider(height: 0, thickness: 2),
+                            SalesItemGrid(),
                           ],
                         ),
                       ),

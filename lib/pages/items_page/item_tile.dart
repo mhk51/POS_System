@@ -39,7 +39,7 @@ class ItemTile extends StatelessWidget {
                   ),
           ),
           title: Text(
-            item.name!,
+            item.name,
             style: const TextStyle(color: Colors.black, fontSize: 24),
           ),
           subtitle: Padding(

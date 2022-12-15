@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 
 class StockContainer extends StatefulWidget {
   const StockContainer({super.key});
@@ -26,13 +26,13 @@ class _StockContainerState extends State<StockContainer> {
   @override
   void initState() {
     super.initState();
-    Item item = Provider.of<Item>(context, listen: false);
+    ItemBuilder item = Provider.of<ItemBuilder>(context, listen: false);
     trackStockBool = item.stockCount != null;
   }
 
   @override
   Widget build(BuildContext context) {
-    Item item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of<ItemBuilder>(context);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(

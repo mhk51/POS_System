@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 
 class BarcodeButton extends StatefulWidget {
   final TextEditingController barcodeTextController;
@@ -16,7 +16,7 @@ class BarcodeButton extends StatefulWidget {
 class _BarcodeButtonState extends State<BarcodeButton> {
   @override
   Widget build(BuildContext context) {
-    Item item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of<ItemBuilder>(context);
     return IconButton(
       icon: Icon(
         CupertinoIcons.barcode_viewfinder,

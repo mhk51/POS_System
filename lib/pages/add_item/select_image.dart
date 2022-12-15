@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 
 class SelectImage extends StatefulWidget {
   const SelectImage({super.key});
@@ -14,7 +14,7 @@ class SelectImage extends StatefulWidget {
 
 class _SelectImageState extends State<SelectImage> {
   File? pickedImage;
-  Future getImage(ImageSource imageSource, Item item) async {
+  Future getImage(ImageSource imageSource, ItemBuilder item) async {
     XFile? tempStore = await ImagePicker().pickImage(source: imageSource);
     setState(() {
       pickedImage = File(tempStore!.path);
@@ -24,7 +24,7 @@ class _SelectImageState extends State<SelectImage> {
 
   @override
   Widget build(BuildContext context) {
-    Item? item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of<ItemBuilder>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

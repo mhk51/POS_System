@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/representation_type.dart';
 import 'package:scanner_app/shared/select_color.dart';
 import 'package:scanner_app/pages/add_item/select_image.dart';
 import 'package:scanner_app/shared/selected_shape.dart';

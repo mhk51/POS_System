@@ -8,7 +8,6 @@ class Ticket extends ChangeNotifier {
   List<int> itemQty = [];
   String searchWord;
   Category? category;
-  bool searchMode = false;
 
   Map<Item, int> items = {};
 
@@ -31,11 +30,6 @@ class Ticket extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateSearchMode(bool searchMode) {
-    this.searchMode = searchMode;
-    notifyListeners();
-  }
-
   void addItem(Item item) {
     if (items.containsKey(item)) {
       items[item] = items[item]! + 1;
@@ -43,14 +37,14 @@ class Ticket extends ChangeNotifier {
       items[item] = 1;
     }
     itemCount++;
-    totalCost += item.price!;
+    totalCost += item.price;
     notifyListeners();
   }
 
   void incrementItem(Item item) {
     items[item] = items[item]! + 1;
     itemCount++;
-    totalCost += item.price!;
+    totalCost += item.price;
     notifyListeners();
   }
 
@@ -58,7 +52,7 @@ class Ticket extends ChangeNotifier {
     if (items[item]! > 1) {
       items[item] = items[item]! - 1;
       itemCount--;
-      totalCost -= item.price!;
+      totalCost -= item.price;
       notifyListeners();
     }
   }
@@ -67,7 +61,7 @@ class Ticket extends ChangeNotifier {
     int oldQty = items[item]!;
     items[item] = qty;
     itemCount += qty - oldQty;
-    totalCost += (qty - oldQty) * item.price!;
+    totalCost += (qty - oldQty) * item.price;
     notifyListeners();
   }
 
@@ -75,7 +69,7 @@ class Ticket extends ChangeNotifier {
     int qty = items[item]!;
     items.remove(item);
     itemCount -= qty;
-    totalCost -= (item.price! * qty);
+    totalCost -= (item.price * qty);
     notifyListeners();
   }
 

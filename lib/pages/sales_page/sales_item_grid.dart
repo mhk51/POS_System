@@ -21,29 +21,38 @@ class _SalesItemGridState extends State<SalesItemGrid> {
   DataRow rowFromItem(MapEntry<Item, int> entry) {
     Ticket ticket = Provider.of(context);
     Item item = entry.key;
-    int price = item.price!;
+    int price = item.price;
     int qty = entry.value;
     return DataRow(
       cells: [
-        DataCell(Icon(
-          item.shape,
-          color: item.color,
+        DataCell(SizedBox(
+          width: 40,
+          child: Icon(
+            item.shape,
+            color: item.color,
+            size: 35,
+          ),
         )),
         DataCell(
-          SizedBox(width: 110, child: Text(item.name!)),
+          SizedBox(width: 120, child: Text(item.name)),
         ),
         DataCell(
-          DropdownButton(
-            menuMaxHeight: 500,
-            alignment: AlignmentDirectional.topStart,
-            value: qty,
-            items: quantities.map(dropDownFromInt).toList(),
-            onChanged: (value) => ticket.setItemQuantity(item, value),
+          SizedBox(
+            width: 44,
+            child: DropdownButton(
+              menuMaxHeight: 500,
+              alignment: AlignmentDirectional.topStart,
+              value: qty,
+              items: quantities.map(dropDownFromInt).toList(),
+              onChanged: (value) => ticket.setItemQuantity(item, value),
+            ),
           ),
         ),
         DataCell(
           SizedBox(
-              width: 75, child: Text(('${NumberFormat('#,###,###.##').format(price * qty)} L.L'))),
+              width: 100,
+              child: Text(
+                  ('${NumberFormat('#,###,###.##').format(price * qty)} L.L'))),
         ),
         DataCell(
           SizedBox(
@@ -66,26 +75,67 @@ class _SalesItemGridState extends State<SalesItemGrid> {
 
     List<DataRow> rows = items.map(rowFromItem).toList();
     return ticket.items.isEmpty
-        ? Container()
-        : DataTable(
-            horizontalMargin: 10,
-            headingRowHeight: 40,
-            columnSpacing: 20,
-            // columnSpacing: 50,
-            columns: const [
-              DataColumn(label: SizedBox()),
-              DataColumn(
-                label: Text('Name'),
-              ),
-              DataColumn(
-                label: Text('Qty'),
-              ),
-              DataColumn(
-                label: Text('Total'),
-              ),
-              DataColumn(label: SizedBox())
-            ],
-            rows: rows,
+        ? const EmptyCart()
+        : Container(
+            width: MediaQuery.of(context).size.width,
+            color: Colors.green,
+            child: DataTable(
+              dataRowColor: MaterialStateProperty.all(Colors.grey[100]),
+              horizontalMargin: 0,
+              headingRowHeight: 40,
+              columnSpacing: 0,
+              dataRowHeight: 80,
+              // columnSpacing: 50,
+              columns: const [
+                DataColumn(label: SizedBox()),
+                DataColumn(
+                  label: Text(
+                    'Name',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Qty',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                DataColumn(
+                  label: Text(
+                    'Total',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                DataColumn(label: SizedBox())
+              ],
+              rows: rows,
+            ),
           );
+  }
+}
+
+class EmptyCart extends StatelessWidget {
+  const EmptyCart({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 1000,
+      height: 550,
+      child: ColorFiltered(
+        colorFilter:
+            ColorFilter.mode(Colors.green.withOpacity(1), BlendMode.color),
+        child: Image.asset(
+          'assets/cart.jpg',
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 }
