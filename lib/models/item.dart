@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:scanner_app/models/category.dart';
+import 'package:scanner_app/models/item_builder.dart';
 
 class Item {
   final String name;
@@ -25,6 +26,20 @@ class Item {
     this.shape = Icons.circle,
     this.image,
   });
+
+  factory Item.fromBuilder(ItemBuilder itemBuilder) {
+    return Item(
+      name: itemBuilder.name!,
+      price: itemBuilder.price!,
+      barcode: itemBuilder.barcode,
+      category: itemBuilder.category,
+      color: itemBuilder.color,
+      cost: itemBuilder.cost,
+      stockCount: itemBuilder.stockCount,
+      image: itemBuilder.image,
+      shape: itemBuilder.shape,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {

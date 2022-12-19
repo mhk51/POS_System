@@ -33,7 +33,7 @@ class ItemServices {
       }
     }
     return Item(
-      barcode: snapshot.get('barcode'),
+      barcode: snapshot.get('barcode') ?? snapshot.id,
       name: snapshot.get('name'),
       price: snapshot.get('price'),
       cost: snapshot.get('cost'),
@@ -65,8 +65,8 @@ class ItemServices {
     }
   }
 
-  static Future<void> deleteItem(Item item) async {
-    await itemsCollection.doc(item.barcode).delete();
+  static Future<void> deleteItem(String barcode) async {
+    await itemsCollection.doc(barcode).delete();
   }
 }
 // class ItemServices {

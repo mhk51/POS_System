@@ -128,9 +128,6 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
             ),
             const SizedBox(height: 20),
             TextFormField(
-              validator: (value) {
-                return value!.isNotEmpty ? null : "Please Enter a Barcode";
-              },
               onChanged: (value) {
                 item.updateBarcode(value);
               },

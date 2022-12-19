@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/category.dart';
+import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/pages/add_item/delete_item.dart';
 import 'package:scanner_app/pages/add_item/item_representation.dart';
@@ -26,14 +27,17 @@ class _AddItemState extends State<AddItem> {
     List<Future> futures = [
       CategoriesServices.getAllCategories(),
     ];
-    if (data != null) {
+    if (data != null && data.barcode != null) {
       futures.add(ItemServices.getItem(data.barcode!));
     }
     List reponses = await Future.wait(futures);
     List<Category> categories = reponses[0];
     ItemBuilder? itemResponse;
-    if (data != null) {
-      itemResponse = reponses[1];
+    Item? item = reponses[1];
+    if (data != null && data.barcode != null) {
+      itemResponse = item != null
+          ? ItemBuilder.fromItem(item)
+          : ItemBuilder(barcode: data.barcode);
     }
 
     return {"categories": categories, "item": itemResponse};
@@ -57,7 +61,7 @@ class _AddItemState extends State<AddItem> {
                 ),
               ],
               builder: (context, snapshot) {
-                ItemBuilder item = Provider.of<ItemBuilder>(context);
+                ItemBuilder itemBuilder = Provider.of<ItemBuilder>(context);
                 return Scaffold(
                   appBar: AppBar(
                     title: Text(itemArg == null ? "Add Item" : "Edit Item"),
@@ -65,9 +69,10 @@ class _AddItemState extends State<AddItem> {
                     actions: [
                       TextButton(
                         onPressed: () {
-                          item.update();
+                          itemBuilder.update();
                           if (_key.currentState!.validate()) {
-                            Navigator.pop(context, item);
+                            Navigator.pop(
+                                context, Item.fromBuilder(itemBuilder));
                           }
                         },
                         child: const Padding(

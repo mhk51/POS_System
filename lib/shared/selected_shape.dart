@@ -33,7 +33,7 @@ class _SelectedShapeState extends State<SelectedShape> {
     Icons.water_drop_outlined,
   ];
 
-  int getIndexFromItem(Item item) {
+  int getIndexFromItem(ItemBuilder item) {
     return icons.indexOf(item.shape);
   }
 
@@ -66,7 +66,7 @@ class _SelectedShapeState extends State<SelectedShape> {
   int? selectedShape;
   @override
   Widget build(BuildContext context) {
-    Item item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of(context);
     selectedShape = getIndexFromItem(item);
     return Padding(
       padding: const EdgeInsets.only(top: 10),

@@ -42,6 +42,10 @@ class ItemBuilder extends ChangeNotifier {
     );
   }
 
+  bool validate() {
+    return name != null;
+  }
+
   Map<String, dynamic> toMap() {
     return {
       "barcode": barcode,

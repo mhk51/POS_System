@@ -3,11 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:scanner_app/drawer/drawer.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
-import 'package:scanner_app/models/search_class.dart';
+import 'package:scanner_app/models/item_list.dart';
 import 'package:scanner_app/pages/items_page/items_appbar.dart';
 import 'package:scanner_app/pages/items_page/items_list.dart';
 import 'package:scanner_app/shared/routes.dart';
-import 'package:scanner_app/services/categories_services.dart';
 import 'package:scanner_app/shared/loading.dart';
 import 'package:scanner_app/services/items_services.dart';
 
@@ -28,72 +27,51 @@ class _ItemsPageState extends State<ItemsPage> {
     return set.toList();
   }
 
-  Category? selectedCategory;
-
-  void onChanged(Category? category) {
-    setState(() {
-      selectedCategory = category;
-    });
-  }
-
-  Future<Map<String, dynamic>> getInfo() async {
-    List<Future> futures = [
-      CategoriesServices.getAllCategories(),
-      ItemServices.getAllItems(categoryName: selectedCategory?.name),
-    ];
-
-    List reponses = await Future.wait(futures);
-    List<Category?> categories = reponses[0];
-    List<Item> items = reponses[1];
-
-    return {"categories": categories, "items": items};
+  void refresh() {
+    setState(() {});
   }
 
   String searchString = '';
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>>(
-        future: getInfo(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done &&
-              !snapshot.hasError) {
-            List<Category?> categories = snapshot.data!['categories'];
-            List<Item> items = snapshot.data!['items'];
-            return MultiProvider(
-                providers: [
-                  ChangeNotifierProvider.value(
-                    value: SearchClass(),
-                  ),
-                ],
-                builder: (context, snapshot) {
-                  return Scaffold(
-                    drawer: const NavDrawer(),
-                    appBar: ItemsAppBar(
-                      onChanged: onChanged,
-                      categories: categories,
-                      selectedCategory: selectedCategory,
-                    ),
-                    body: ItemsList(items: items),
-                    floatingActionButton: FloatingActionButton(
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onPressed: () async {
-                        Item? item = await Navigator.pushNamed(
-                            context, PageRoutes.addItem) as Item?;
-                        if (item != null) {
-                          await ItemServices.insertItem(item);
-                        }
-                        setState(() {});
-                      },
-                      child: const Icon(
-                        Icons.add,
-                      ),
-                    ),
-                  );
-                });
-          } else {
-            return Loading(backGroundColor: Theme.of(context).primaryColor);
-          }
-        });
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+          value: ItemList(),
+        ),
+      ],
+      builder: (context, snapshot) {
+        ItemList itemList = Provider.of(context);
+        List<Item> items = itemList.items;
+        if (!itemList.loading) {
+          return Scaffold(
+            drawer: const NavDrawer(),
+            appBar: const ItemsAppBar(),
+            body: ItemsList(
+              items: items,
+              refresh: refresh,
+            ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: Theme.of(context).primaryColor,
+              onPressed: () async {
+                Item? item =
+                    await Navigator.pushNamed(context, PageRoutes.addItem)
+                        as Item?;
+                if (item != null) {
+                  await ItemServices.insertItem(item);
+                }
+                await itemList.load();
+              },
+              child: const Icon(
+                Icons.add,
+              ),
+            ),
+          );
+        } else {
+          return Loading(backGroundColor: Theme.of(context).primaryColor);
+        }
+      },
+    );
   }
 }

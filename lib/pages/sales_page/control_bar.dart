@@ -4,8 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/models/ticket.dart';
 import 'package:scanner_app/pages/sales_page/search_delegate.dart';
+import 'package:scanner_app/services/items_services.dart';
+import 'package:scanner_app/shared/routes.dart';
 
 class ControlBar extends StatefulWidget {
   const ControlBar({super.key});
@@ -90,8 +93,14 @@ class _ControlBarState extends State<ControlBar> {
                       );
                     },
                   );
-                  if (result != null && result) {
-                    print("item added");
+                  if (result != null && result && mounted) {
+                    Item? item = await Navigator.pushNamed(
+                        context, PageRoutes.addItem,
+                        arguments: ItemBuilder(barcode: barcode)) as Item?;
+                    if (item != null) {
+                      await ItemServices.insertItem(item);
+                      ticket.addItem(item);
+                    }
                   }
                 }
               },

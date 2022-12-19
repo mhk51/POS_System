@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
+import 'package:scanner_app/models/item_list.dart';
 import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/services/items_services.dart';
 
 class ItemTile extends StatelessWidget {
   final Item item;
-  final Function callBack;
-  const ItemTile({super.key, required this.item, required this.callBack});
+  const ItemTile({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
+    ItemList itemList = Provider.of(context);
     return Column(
       children: [
         ListTile(
@@ -18,11 +21,11 @@ class ItemTile extends StatelessWidget {
           onTap: () async {
             Item? updatedItem = await Navigator.pushNamed(
                 context, PageRoutes.addItem,
-                arguments: item) as Item?;
+                arguments: ItemBuilder.fromItem(item)) as Item?;
             if (updatedItem != null) {
               await ItemServices.insertItem(updatedItem);
             }
-            callBack();
+            itemList.load();
           },
           leading: SizedBox(
             height: double.infinity,

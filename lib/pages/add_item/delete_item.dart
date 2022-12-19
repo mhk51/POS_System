@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/services/items_services.dart';
 
 class DeleteItem extends StatefulWidget {
@@ -13,7 +13,7 @@ class DeleteItem extends StatefulWidget {
 class _DeleteItemState extends State<DeleteItem> {
   @override
   Widget build(BuildContext context) {
-    Item item = Provider.of<Item>(context);
+    ItemBuilder item = Provider.of(context);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -30,7 +30,7 @@ class _DeleteItemState extends State<DeleteItem> {
       ),
       child: TextButton.icon(
         onPressed: () async {
-          await ItemServices.deleteItem(item);
+          await ItemServices.deleteItem(item.barcode!);
           if (mounted) {
             Navigator.pop(context);
           }

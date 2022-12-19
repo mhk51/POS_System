@@ -3,24 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/item_builder.dart';
-import 'package:scanner_app/models/search_class.dart';
+import 'package:scanner_app/models/item_list.dart';
 import 'package:scanner_app/pages/items_page/category_dropdown.dart';
 import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/services/items_services.dart';
 
 // ignore: must_be_immutable
 class ItemsAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final Function(Category?) onChanged;
-  final List<Category?> categories;
-  Category? selectedCategory;
-  ItemsAppBar(
-      {super.key,
-      required this.selectedCategory,
-      required this.categories,
-      required this.onChanged});
+  const ItemsAppBar({
+    super.key,
+  });
 
   @override
   State<ItemsAppBar> createState() => _ItemsAppBarState();
@@ -33,7 +27,7 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
   bool _searchBool = false;
   @override
   Widget build(BuildContext context) {
-    SearchClass searchClass = Provider.of<SearchClass>(context);
+    ItemList itemList = Provider.of(context);
     return AppBar(
       leading: _searchBool
           ? IconButton(
@@ -49,7 +43,7 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
           ? TextField(
               autofocus: true,
               onChanged: (value) {
-                searchClass.updateSearchWord(value);
+                itemList.updateSearchWord(value);
               },
               decoration: const InputDecoration(
                   hintText: "Search",
@@ -57,11 +51,7 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
                       borderSide: BorderSide(color: Colors.white))),
               cursorColor: Colors.white,
             )
-          : FilterDropDown(
-              selectedValue: widget.selectedCategory,
-              categories: widget.categories,
-              onChanged: widget.onChanged,
-            ),
+          : const FilterDropDown(),
       backgroundColor: Theme.of(context).primaryColor,
       actions: _searchBool
           ? []
@@ -84,15 +74,15 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
                   if (item != null) {
                     itemBuilder = ItemBuilder.fromItem(item);
                   }
-                  itemBuilder ??= ItemBuilder(barcode: null);
+                  itemBuilder ??= ItemBuilder(barcode: barcode);
                   if (!mounted) return;
                   Item? updatedItem = await Navigator.pushNamed(
-                      context, PageRoutes.addItem,
-                      arguments: item) as Item?;
+                          context, PageRoutes.addItem, arguments: itemBuilder)
+                      as Item?;
                   if (updatedItem != null) {
                     await ItemServices.insertItem(updatedItem);
                   }
-                  setState(() {});
+                  itemList.load();
                 },
                 icon: const Icon(
                   CupertinoIcons.barcode_viewfinder,
