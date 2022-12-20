@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/item_builder.dart';
 
 class SelectedShape extends StatefulWidget {

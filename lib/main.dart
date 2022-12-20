@@ -6,10 +6,11 @@ import 'package:scanner_app/pages/add_item/add_item.dart';
 import 'package:scanner_app/pages/back_office_page.dart';
 import 'package:scanner_app/pages/categories_page.dart';
 import 'package:scanner_app/pages/items_page/items_page.dart';
-import 'package:scanner_app/pages/receipts_page.dart';
+import 'package:scanner_app/pages/receipts_page/receipts_page.dart';
 import 'package:scanner_app/pages/sales_page/cash_out.dart';
 import 'package:scanner_app/pages/sales_page/sales_pages.dart';
 import 'package:scanner_app/pages/settings_page.dart';
+import 'package:scanner_app/pages/receipts_page/ticket_page.dart';
 import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/pages/support_page.dart';
 
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
         PageRoutes.addCategory: (context) => const AddCategory(),
         PageRoutes.addItem: (context) => const AddItem(),
         PageRoutes.cashOut: (context) => const CashOut(),
+        PageRoutes.ticketPage: (context) => const TicketPage(),
       },
     );
   }

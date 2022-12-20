@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Ticket extends ChangeNotifier {
   int itemCount;
   int totalCost;
-  List<int> itemQty = [];
   String searchWord;
   Category? category;
 
@@ -73,9 +74,15 @@ class Ticket extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, dynamic> toMap() {
+  Future<Map<String, dynamic>> toMap() async {
+    final prefs = await SharedPreferences.getInstance();
+    int current = prefs.getInt('ticketID') ?? 0;
+    String ticketNumber = '#1-1${NumberFormat('000').format(current + 1)}';
+    await prefs.setInt('ticketID', current + 1);
     return {
+      "ticketNumber": ticketNumber,
       "totalCost": totalCost,
+      "itemCount": itemCount,
       "items": items.map(
         (item, qty) {
           Map<String, dynamic> data = item.toMap();
@@ -83,6 +90,7 @@ class Ticket extends ChangeNotifier {
           return MapEntry(item.name, data);
         },
       ),
+      "time": DateTime.now(),
     };
   }
 }
