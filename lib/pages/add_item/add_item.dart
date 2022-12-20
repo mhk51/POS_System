@@ -33,7 +33,7 @@ class _AddItemState extends State<AddItem> {
     List reponses = await Future.wait(futures);
     List<Category> categories = reponses[0];
     ItemBuilder? itemResponse;
-    Item? item = reponses[1];
+    Item? item = reponses.length == 2 ? reponses[1] : null;
     if (data != null && data.barcode != null) {
       itemResponse = item != null
           ? ItemBuilder.fromItem(item)
