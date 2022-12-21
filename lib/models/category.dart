@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:objectbox/objectbox.dart';
+import 'package:scanner_app/objectbox.g.dart';
 
+@Entity()
 class Category {
   final String name;
-  final Color color;
+  int color;
   int items;
+  @Id()
+  int? id;
 
-  Category({
+  Category(
+    this.color, {
     required this.name,
-    required this.color,
     this.items = 0,
+    this.id,
   });
 
   Map<String, dynamic> toMap() {
     return {
       "name": name,
-      'color': color.value,
+      'color': color,
       'items': items,
     };
   }

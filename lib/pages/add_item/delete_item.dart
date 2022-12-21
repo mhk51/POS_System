@@ -30,7 +30,7 @@ class _DeleteItemState extends State<DeleteItem> {
       ),
       child: TextButton.icon(
         onPressed: () async {
-          await ItemServices.deleteItem(item.barcode!);
+          ItemServices.deleteItem(item.id);
           if (mounted) {
             Navigator.pop(context);
           }

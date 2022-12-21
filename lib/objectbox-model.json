@@ -1,0 +1,177 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:1454581974588577974",
+      "lastPropertyId": "5:5776594166086902538",
+      "name": "Category",
+      "properties": [
+        {
+          "id": "1:1402245200493208971",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "2:4122890120377872665",
+          "name": "items",
+          "type": 6
+        },
+        {
+          "id": "3:4015180901428388142",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "5:5776594166086902538",
+          "name": "color",
+          "type": 6
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2653371548284163512",
+      "lastPropertyId": "10:5661535892374039616",
+      "name": "Item",
+      "properties": [
+        {
+          "id": "1:3958307507819552808",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1155895079856093697",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "3:4982579105386289832",
+          "name": "barcode",
+          "type": 9
+        },
+        {
+          "id": "4:3658196232756825245",
+          "name": "price",
+          "type": 6
+        },
+        {
+          "id": "5:4921925973018533803",
+          "name": "cost",
+          "type": 6
+        },
+        {
+          "id": "6:8876581926866698635",
+          "name": "stockCount",
+          "type": 6
+        },
+        {
+          "id": "7:1686487853823481052",
+          "name": "color",
+          "type": 6
+        },
+        {
+          "id": "8:7878761970085120728",
+          "name": "shape",
+          "type": 6
+        },
+        {
+          "id": "9:7171971469928662862",
+          "name": "image",
+          "type": 9
+        },
+        {
+          "id": "10:5661535892374039616",
+          "name": "categoryId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:7057262496736662276",
+          "relationTarget": "Category"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:5081414179245264874",
+      "lastPropertyId": "3:3067754426484193403",
+      "name": "ItemQty",
+      "properties": [
+        {
+          "id": "1:8975640846124225026",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4296588769392580694",
+          "name": "qty",
+          "type": 6
+        },
+        {
+          "id": "3:3067754426484193403",
+          "name": "itemId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "2:7599025199795592852",
+          "relationTarget": "Item"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:311949754708615431",
+      "lastPropertyId": "5:4627432496685139972",
+      "name": "Receipt",
+      "properties": [
+        {
+          "id": "1:8204403732343589214",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4414812340080656483",
+          "name": "itemCount",
+          "type": 6
+        },
+        {
+          "id": "3:3420968320976194737",
+          "name": "totalCost",
+          "type": 6
+        },
+        {
+          "id": "4:79647245843032830",
+          "name": "time",
+          "type": 10
+        }
+      ],
+      "relations": [
+        {
+          "id": "3:101624229004863566",
+          "name": "items",
+          "targetId": "3:5081414179245264874"
+        }
+      ]
+    }
+  ],
+  "lastEntityId": "4:311949754708615431",
+  "lastIndexId": "2:7599025199795592852",
+  "lastRelationId": "3:101624229004863566",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [
+    422095882667025137,
+    4627432496685139972
+  ],
+  "retiredRelationUids": [
+    6717258977099672173,
+    9191916916070458019
+  ],
+  "version": 1
+}

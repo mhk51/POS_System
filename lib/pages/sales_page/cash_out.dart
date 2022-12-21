@@ -3,8 +3,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:scanner_app/models/receipts.dart';
 import 'package:scanner_app/models/ticket.dart';
-import 'package:scanner_app/services/ticket_services.dart';
+import 'package:scanner_app/services/receipt_services.dart';
 
 class CashOut extends StatefulWidget {
   static const String routeName = "/cash_out";
@@ -158,7 +159,8 @@ class _CashOutState extends State<CashOut> {
                             );
                           },
                         );
-                        await TicketServices.insertTicket(ticket);
+                        Receipt receipt = Receipt.fromTicket(ticket);
+                        ReceiptServices.insertReceipt(receipt);
                         ticket.clear();
                         if (!mounted) return;
                         Navigator.pop(context);

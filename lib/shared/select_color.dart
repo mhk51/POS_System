@@ -29,7 +29,7 @@ class _SelectColorState extends State<SelectColor> {
     ItemBuilder? item;
     try {
       item = Provider.of<ItemBuilder>(context);
-      selectedColor = item.color;
+      selectedColor = Color(item.color);
     } catch (e) {
       item == null;
     }
@@ -41,7 +41,7 @@ class _SelectColorState extends State<SelectColor> {
       ),
       onPressed: () {
         if (item != null) {
-          item.updateColor(color);
+          item.updateColor(color.value);
         } else {
           widget.setSelectedColor!(color);
         }

@@ -21,39 +21,27 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-  Future<Map<String, dynamic>> getItemData() async {
-    ItemBuilder? data =
+  Future<ItemBuilder?> getItemData() async {
+    ItemBuilder? itemResponse =
         ModalRoute.of(context)!.settings.arguments as ItemBuilder?;
-    List<Future> futures = [
-      CategoriesServices.getAllCategories(),
-    ];
-    if (data != null && data.barcode != null) {
-      futures.add(ItemServices.getItem(data.barcode!));
+    if (itemResponse != null &&
+        itemResponse.name == null &&
+        itemResponse.barcode != null) {
+      itemResponse = ItemBuilder(barcode: itemResponse.barcode);
     }
-    List reponses = await Future.wait(futures);
-    List<Category> categories = reponses[0];
-    ItemBuilder? itemResponse;
-    Item? item = reponses.length == 2 ? reponses[1] : null;
-    if (data != null && data.barcode != null) {
-      itemResponse = item != null
-          ? ItemBuilder.fromItem(item)
-          : ItemBuilder(barcode: data.barcode);
-    }
-
-    return {"categories": categories, "item": itemResponse};
+    return itemResponse;
   }
 
   final _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>>(
+    return FutureBuilder<ItemBuilder?>(
         future: getItemData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> map = snapshot.data!;
-            List<Category> categories = map['categories'];
-            ItemBuilder? itemArg = map['item'];
+            List<Category> categories = CategoriesServices.getAllCategories();
+            ItemBuilder? itemArg = snapshot.data;
             return MultiProvider(
               providers: [
                 ChangeNotifierProvider.value(

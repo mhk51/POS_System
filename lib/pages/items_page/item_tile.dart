@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +25,7 @@ class ItemTile extends StatelessWidget {
                 context, PageRoutes.addItem,
                 arguments: ItemBuilder.fromItem(item)) as Item?;
             if (updatedItem != null) {
-              await ItemServices.insertItem(updatedItem);
+              ItemServices.updateItem(updatedItem);
             }
             itemList.load();
           },
@@ -32,12 +34,12 @@ class ItemTile extends StatelessWidget {
             width: 60,
             child: item.image == null
                 ? Icon(
-                    item.shape,
-                    color: item.color,
+                    IconData(item.shape, fontFamily: "MaterialIcons"),
+                    color: Color(item.color),
                     size: 50,
                   )
                 : CircleAvatar(
-                    backgroundImage: FileImage(item.image!),
+                    backgroundImage: FileImage(File(item.image!)),
                     radius: 25,
                   ),
           ),

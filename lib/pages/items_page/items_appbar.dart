@@ -69,7 +69,7 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
                   if (barcode == '-1') {
                     return;
                   }
-                  Item? item = await ItemServices.getItem(barcode);
+                  Item? item = await ItemServices.getItembyBarcode(barcode);
                   ItemBuilder? itemBuilder;
                   if (item != null) {
                     itemBuilder = ItemBuilder.fromItem(item);
@@ -80,7 +80,7 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
                           context, PageRoutes.addItem, arguments: itemBuilder)
                       as Item?;
                   if (updatedItem != null) {
-                    await ItemServices.insertItem(updatedItem);
+                    ItemServices.insertItem(updatedItem);
                   }
                   itemList.load();
                 },

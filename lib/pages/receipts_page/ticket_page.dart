@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_qty.dart';
 import 'package:scanner_app/models/receipts.dart';
+import 'package:scanner_app/objectbox.g.dart';
 
 class TicketPage extends StatelessWidget {
   static const String routeName = "/ticket_page";
   const TicketPage({super.key});
 
-  List<Widget> itemTiles(Map<Item, int> data) {
+  List<Widget> itemTiles(ToMany<ItemQty> data) {
     List<Widget> tiles = [];
-    for (MapEntry entry in data.entries) {
-      Item item = entry.key;
-      int qty = entry.value;
+    for (ItemQty entry in data.toList()) {
+      Item item = entry.item.target!;
+      int qty = entry.qty;
       tiles.add(
         ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -37,7 +39,7 @@ class TicketPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
-        title: Text(receipt.receciptNumber),
+        title: Text('#1-1${NumberFormat('000').format(receipt.id)}'),
       ),
       body: Column(
         children: [
@@ -87,7 +89,7 @@ class TicketPage extends StatelessWidget {
                   style: const TextStyle(color: Colors.grey),
                 ),
                 Text(
-                  receipt.receciptNumber,
+                  '#1-1${NumberFormat('000').format(receipt.id)}',
                   style: const TextStyle(color: Colors.grey),
                 )
               ],

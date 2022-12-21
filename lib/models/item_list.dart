@@ -18,14 +18,9 @@ class ItemList extends ChangeNotifier {
   Future<void> load() async {
     loading = true;
     notifyListeners();
-    List<Future> futures = [
-      CategoriesServices.getAllCategories(),
-      ItemServices.getAllItems(categoryName: selectedCategory?.name),
-    ];
 
-    List reponses = await Future.wait(futures);
-    categories = reponses[0];
-    _allItems = reponses[1];
+    categories = CategoriesServices.getAllCategories();
+    _allItems = ItemServices.getAllItems(categoryID: selectedCategory?.id);
     items = _filter();
 
     loading = false;
@@ -35,7 +30,8 @@ class ItemList extends ChangeNotifier {
   List<Item> _filter() {
     List<Item> result = [];
     for (Item item in _allItems) {
-      if (selectedCategory == null || item.category == selectedCategory) {
+      if (selectedCategory == null ||
+          item.category.target == selectedCategory) {
         if (item.name.startsWith(searchWord)) {
           result.add(item);
         }

@@ -17,6 +17,7 @@ class _AddCategoryState extends State<AddCategory> {
   Color selectedColor = Colors.grey;
   String categoryName = '';
   Category? categoryArg;
+  int? categoryID;
 
   FocusNode myFocusNode = FocusNode();
 
@@ -36,7 +37,8 @@ class _AddCategoryState extends State<AddCategory> {
     if (data != null && categoryArg == null) {
       categoryArg = data;
       categoryName = data.name;
-      selectedColor = data.color;
+      categoryID = data.id;
+      selectedColor = Color(data.color);
     }
     return Scaffold(
       appBar: AppBar(
@@ -48,8 +50,9 @@ class _AddCategoryState extends State<AddCategory> {
             child: TextButton(
               onPressed: () {
                 Category category = Category(
-                  color: selectedColor,
+                  selectedColor.value,
                   name: categoryName,
+                  id: categoryID,
                 );
                 Navigator.pop(context, category);
               },
@@ -207,11 +210,9 @@ class _AddCategoryState extends State<AddCategory> {
                         ],
                       ),
                       child: TextButton.icon(
-                        onPressed: () async {
-                          await CategoriesServices.deleteCategory(data);
-                          if (mounted) {
-                            Navigator.pop(context);
-                          }
+                        onPressed: () {
+                          CategoriesServices.deleteCategory(data);
+                          Navigator.pop(context);
                         },
                         icon: Icon(
                           Icons.delete,

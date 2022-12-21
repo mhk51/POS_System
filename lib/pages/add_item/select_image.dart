@@ -16,10 +16,12 @@ class _SelectImageState extends State<SelectImage> {
   File? pickedImage;
   Future getImage(ImageSource imageSource, ItemBuilder item) async {
     XFile? tempStore = await ImagePicker().pickImage(source: imageSource);
-    setState(() {
-      pickedImage = File(tempStore!.path);
-    });
-    item.updateImage(pickedImage);
+    if (tempStore != null) {
+      setState(() {
+        pickedImage = File(tempStore.path);
+      });
+      item.updateImage(pickedImage);
+    }
   }
 
   @override

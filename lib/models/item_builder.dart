@@ -6,39 +6,42 @@ import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
 
 class ItemBuilder extends ChangeNotifier {
+  int? id;
   String? barcode;
   String? name;
   int? price;
   int cost;
   int? stockCount;
-  Color color;
+  int color;
   IconData shape;
   Category? category;
   File? image;
 
   ItemBuilder({
+    this.id,
     this.barcode,
     this.name,
     this.price,
     this.stockCount,
     this.category,
-    this.color = Colors.grey,
+    int? color,
     this.cost = 0,
     this.shape = Icons.circle,
     this.image,
-  });
+  }) : color = color ?? Colors.grey.value;
 
   factory ItemBuilder.fromItem(Item item) {
     return ItemBuilder(
+      id: item.id,
       barcode: item.barcode,
       name: item.name,
       price: item.price,
       stockCount: item.stockCount,
-      category: item.category,
+      category: item.category.target,
       color: item.color,
       cost: item.cost ?? 0,
-      shape: item.shape,
-      image: item.image,
+      shape: IconData(item.shape, fontFamily: "MaterialIcons"),
+      image: item.image != null ? File(item.image!) : null,
     );
   }
 
@@ -53,7 +56,7 @@ class ItemBuilder extends ChangeNotifier {
       "price": price,
       "cost": cost,
       "stock": stockCount,
-      'color': color.value,
+      'color': color,
       "category": category?.name,
       "shape": shape.codePoint,
       "image": image?.path,
@@ -64,7 +67,7 @@ class ItemBuilder extends ChangeNotifier {
     stockCount = stock;
   }
 
-  void updateColor(Color color) {
+  void updateColor(int color) {
     this.color = color;
   }
 

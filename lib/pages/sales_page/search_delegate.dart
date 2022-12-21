@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/ticket.dart';
@@ -19,12 +21,12 @@ class CustomSearchDelegate extends SearchDelegate {
           width: 60,
           child: item.image == null
               ? Icon(
-                  item.shape,
-                  color: item.color,
+                  IconData(item.shape, fontFamily: "MaterialIcons"),
+                  color: Color(item.color),
                   size: 40,
                 )
               : CircleAvatar(
-                  backgroundImage: FileImage(item.image!),
+                  backgroundImage: FileImage(File(item.image!)),
                   radius: 20,
                 ),
         ),

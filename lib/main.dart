@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:scanner_app/pages/add_category.dart';
 import 'package:scanner_app/pages/add_item/add_item.dart';
@@ -11,12 +10,17 @@ import 'package:scanner_app/pages/sales_page/cash_out.dart';
 import 'package:scanner_app/pages/sales_page/sales_pages.dart';
 import 'package:scanner_app/pages/settings_page.dart';
 import 'package:scanner_app/pages/receipts_page/ticket_page.dart';
+import 'package:scanner_app/services/categories_services.dart';
+import 'package:scanner_app/services/items_services.dart';
+import 'package:scanner_app/services/receipt_services.dart';
 import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/pages/support_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await CategoriesServices.create();
+  await ItemServices.create();
+  await ReceiptServices.create();
   runApp(const MyApp());
 }
 

@@ -98,7 +98,7 @@ class _ControlBarState extends State<ControlBar> {
                         context, PageRoutes.addItem,
                         arguments: ItemBuilder(barcode: barcode)) as Item?;
                     if (item != null) {
-                      await ItemServices.insertItem(item);
+                      ItemServices.insertItem(item);
                       ticket.addItem(item);
                     }
                   }

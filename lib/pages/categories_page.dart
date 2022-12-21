@@ -25,13 +25,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                       context, PageRoutes.addCategory, arguments: category)
                   as Category?;
               if (updatedCategory != null) {
-                await CategoriesServices.updateCategory(updatedCategory);
+                CategoriesServices.updateCategory(updatedCategory);
               }
               setState(() {});
             },
             leading: Icon(
               Icons.circle,
-              color: category.color,
+              color: Color(category.color),
               size: 55,
             ),
             title: Text(
@@ -50,30 +50,20 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Category> data = CategoriesServices.getAllCategories();
     return Scaffold(
       drawer: const NavDrawer(),
       appBar: AppBar(
         title: const Text('Categorie Page'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: StreamBuilder(
-        stream: CategoriesServices.categories,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active &&
-              !snapshot.hasError) {
-            List<Category> data = snapshot.data!;
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView(
-                  children: data.map(tilefromCategory).toList(),
-                ),
-              ),
-            );
-          } else {
-            return Loading(backGroundColor: Theme.of(context).primaryColor);
-          }
-        },
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView(
+            children: data.map(tilefromCategory).toList(),
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -81,7 +71,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               await Navigator.pushNamed(context, PageRoutes.addCategory)
                   as Category?;
           if (category != null) {
-            await CategoriesServices.insertCategory(category);
+            CategoriesServices.insertCategory(category);
           }
           setState(() {});
         },

@@ -22,7 +22,7 @@ class _ItemsPageState extends State<ItemsPage> {
   List<Category?> getCategoriesFromItems(List<Item> items) {
     Set<Category?> set = {};
     for (var element in items) {
-      set.add(element.category);
+      set.add(element.category.target);
     }
     return set.toList();
   }
@@ -59,7 +59,7 @@ class _ItemsPageState extends State<ItemsPage> {
                     await Navigator.pushNamed(context, PageRoutes.addItem)
                         as Item?;
                 if (item != null) {
-                  await ItemServices.insertItem(item);
+                  ItemServices.insertItem(item);
                 }
                 await itemList.load();
               },

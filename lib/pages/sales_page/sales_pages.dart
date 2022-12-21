@@ -22,15 +22,9 @@ class SalesPage extends StatefulWidget {
 
 class _SalesPageState extends State<SalesPage> {
   Future<Map<String, dynamic>> getInfo() async {
-    List<Future> futures = [
-      CategoriesServices.getAllCategories(),
-      ItemServices.getAllItems(),
-    ];
-
-    List reponses = await Future.wait(futures);
-    List<Category?> categories = List.from(reponses[0]);
+    List<Category?> categories = [...CategoriesServices.getAllCategories()];
     categories.add(null);
-    List<Item> items = reponses[1];
+    List<Item> items = ItemServices.getAllItems();
 
     return {"categories": categories, "items": items};
   }

@@ -3,41 +3,52 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item_builder.dart';
+import 'package:objectbox/objectbox.dart';
+import 'package:scanner_app/objectbox.g.dart';
 
+@Entity()
 class Item {
+  @Id()
+  int? id;
   final String name;
   final String? barcode;
   final int price;
   final int? cost;
   final int? stockCount;
-  final Color color;
-  final IconData shape;
-  final Category? category;
-  final File? image;
+  final int color;
+  final int shape;
+  final String? image;
+
+  final category = ToOne<Category>();
 
   Item({
+    this.id,
     this.barcode,
     required this.name,
     required this.price,
     this.stockCount,
-    this.category,
-    this.color = Colors.grey,
+    int? color,
     this.cost = 0,
-    this.shape = Icons.circle,
+    int? shape,
     this.image,
-  });
+    Category? category,
+  })  : color = color ?? Colors.grey.value,
+        shape = shape ?? Icons.circle.codePoint {
+    this.category.target = category;
+  }
 
   factory Item.fromBuilder(ItemBuilder itemBuilder) {
     return Item(
+      id: itemBuilder.id,
       name: itemBuilder.name!,
       price: itemBuilder.price!,
       barcode: itemBuilder.barcode,
-      category: itemBuilder.category,
       color: itemBuilder.color,
       cost: itemBuilder.cost,
       stockCount: itemBuilder.stockCount,
-      image: itemBuilder.image,
-      shape: itemBuilder.shape,
+      image: itemBuilder.image?.path,
+      shape: itemBuilder.shape.codePoint,
+      category: itemBuilder.category,
     );
   }
 
@@ -48,10 +59,10 @@ class Item {
       "price": price,
       "cost": cost,
       "stock": stockCount,
-      'color': color.value,
-      "category": category?.name,
-      "shape": shape.codePoint,
-      "image": image?.path,
+      'color': color,
+      "category": category.target?.name,
+      "shape": shape,
+      "image": image,
     };
   }
 

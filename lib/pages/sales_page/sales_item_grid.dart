@@ -28,8 +28,8 @@ class _SalesItemGridState extends State<SalesItemGrid> {
         DataCell(SizedBox(
           width: 40,
           child: Icon(
-            item.shape,
-            color: item.color,
+            IconData(item.shape, fontFamily: "MaterialIcons"),
+            color: Color(item.color),
             size: 35,
           ),
         )),
