@@ -50,34 +50,43 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Category> data = CategoriesServices.getAllCategories();
-    return Scaffold(
-      drawer: const NavDrawer(),
-      appBar: AppBar(
-        title: const Text('Categorie Page'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView(
-            children: data.map(tilefromCategory).toList(),
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Category? category =
-              await Navigator.pushNamed(context, PageRoutes.addCategory)
-                  as Category?;
-          if (category != null) {
-            CategoriesServices.insertCategory(category);
+    return StreamBuilder<List<Category>>(
+        stream: CategoriesServices.getCategories,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active &&
+              !snapshot.hasError) {
+            List<Category> data = snapshot.data!;
+            return Scaffold(
+              drawer: const NavDrawer(),
+              appBar: AppBar(
+                title: const Text('Categorie Page'),
+                backgroundColor: Theme.of(context).primaryColor,
+              ),
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    children: data.map(tilefromCategory).toList(),
+                  ),
+                ),
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () async {
+                  Category? category =
+                      await Navigator.pushNamed(context, PageRoutes.addCategory)
+                          as Category?;
+                  if (category != null) {
+                    CategoriesServices.insertCategory(category);
+                  }
+                  setState(() {});
+                },
+                backgroundColor: Theme.of(context).primaryColor,
+                child: const Icon(Icons.add),
+              ),
+            );
+          } else {
+            return Loading(backGroundColor: Theme.of(context).primaryColor);
           }
-          setState(() {});
-        },
-        backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(Icons.add),
-      ),
-    );
+        });
   }
 }

@@ -43,15 +43,11 @@ class _ItemsPageState extends State<ItemsPage> {
       ],
       builder: (context, snapshot) {
         ItemList itemList = Provider.of(context);
-        List<Item> items = itemList.items;
         if (!itemList.loading) {
           return Scaffold(
             drawer: const NavDrawer(),
             appBar: const ItemsAppBar(),
-            body: ItemsList(
-              items: items,
-              refresh: refresh,
-            ),
+            body: const ItemsList(),
             floatingActionButton: FloatingActionButton(
               backgroundColor: Theme.of(context).primaryColor,
               onPressed: () async {
@@ -61,7 +57,7 @@ class _ItemsPageState extends State<ItemsPage> {
                 if (item != null) {
                   ItemServices.insertItem(item);
                 }
-                await itemList.load();
+                itemList.load();
               },
               child: const Icon(
                 Icons.add,

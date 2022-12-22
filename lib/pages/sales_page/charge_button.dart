@@ -63,7 +63,7 @@ class ChargeButton extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        '${NumberFormat('###,###.##').format(ticket.totalCost)} L.L',
+                        '${NumberFormat('###,###.##').format(ticket.totalPrice)} L.L',
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 20,

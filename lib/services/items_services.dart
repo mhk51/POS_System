@@ -41,6 +41,13 @@ class ItemServices {
     return null;
   }
 
+  static Stream<List<Item>> get getItems {
+    final qBuilderTasks = _boxItem.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
   static Item? getItembyBarcode(String barcode) {
     return _boxItem.query(Item_.barcode.equals(barcode)).build().findFirst();
   }

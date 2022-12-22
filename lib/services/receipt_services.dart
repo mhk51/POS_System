@@ -22,6 +22,13 @@ class ReceiptServices {
     return _boxReceipt.getAll();
   }
 
+  static Stream<List<Receipt>> get getReceipts {
+    final qBuilderTasks = _boxReceipt.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
   static void deleteReceipt(int? id) {
     if (id != null) {
       _boxReceipt.remove(id);

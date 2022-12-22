@@ -1,15 +1,17 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/ticket.dart';
 import 'package:intl/intl.dart';
+import 'package:scanner_app/services/categories_services.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   Ticket ticket;
   final List<Item> items;
   CustomSearchDelegate({required this.items, required this.ticket});
-
+  Category? selectedCategory;
   Widget tilefromItem(Item item) {
     return Padding(
       padding: const EdgeInsets.only(right: 20),
@@ -45,12 +47,12 @@ class CustomSearchDelegate extends SearchDelegate {
     );
   }
 
-  List<String?> categories = [null, "Condiments", "Snacks"];
+  List<Category?> categories = [null, ...CategoriesServices.getAllCategories()];
 
-  DropdownMenuItem<String?> dropDownFromString(String? value) {
-    return DropdownMenuItem<String?>(
+  DropdownMenuItem<Category?> dropDownFromString(Category? value) {
+    return DropdownMenuItem<Category?>(
       value: value,
-      child: Text(value ?? "No Category"),
+      child: Text(value?.name ?? "All Categories"),
     );
   }
 
@@ -59,8 +61,13 @@ class CustomSearchDelegate extends SearchDelegate {
     return [
       DropdownButtonHideUnderline(
         child: DropdownButton(
+            value: selectedCategory,
             items: categories.map(dropDownFromString).toList(),
-            onChanged: (value) {}),
+            onChanged: (value) {
+              selectedCategory = value;
+              showResults(context);
+              showSuggestions(context);
+            }),
       ),
       IconButton(
         onPressed: () {
@@ -84,7 +91,10 @@ class CustomSearchDelegate extends SearchDelegate {
     List<Item> matchQuery = [];
     for (Item item in items) {
       if (item.name.toLowerCase().startsWith(query.toLowerCase())) {
-        matchQuery.add(item);
+        if (selectedCategory == item.category.target ||
+            selectedCategory == null) {
+          matchQuery.add(item);
+        }
       }
     }
     return ListView(
@@ -97,7 +107,10 @@ class CustomSearchDelegate extends SearchDelegate {
     List<Item> matchQuery = [];
     for (Item item in items) {
       if (item.name.toLowerCase().startsWith(query.toLowerCase())) {
-        matchQuery.add(item);
+        if (selectedCategory == item.category.target ||
+            selectedCategory == null) {
+          matchQuery.add(item);
+        }
       }
     }
     return Padding(

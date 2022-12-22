@@ -15,7 +15,7 @@ class ItemList extends ChangeNotifier {
     load();
   }
 
-  Future<void> load() async {
+  void load() {
     loading = true;
     notifyListeners();
 

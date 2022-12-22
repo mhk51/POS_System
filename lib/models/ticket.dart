@@ -7,12 +7,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class Ticket extends ChangeNotifier {
   int itemCount;
   int totalCost;
+  int totalPrice;
   String searchWord;
   Category? category;
 
   Map<Item, int> items = {};
 
-  Ticket({this.itemCount = 0, this.totalCost = 0, this.searchWord = ""});
+  Ticket({
+    this.itemCount = 0,
+    this.totalCost = 0,
+    this.searchWord = "",
+    this.totalPrice = 0,
+  });
 
   void clear() {
     itemCount = 0;
@@ -38,14 +44,20 @@ class Ticket extends ChangeNotifier {
       items[item] = 1;
     }
     itemCount++;
-    totalCost += item.price;
+    totalPrice += item.price;
+    if (item.cost != null) {
+      totalCost += item.cost!;
+    }
     notifyListeners();
   }
 
   void incrementItem(Item item) {
     items[item] = items[item]! + 1;
     itemCount++;
-    totalCost += item.price;
+    totalPrice += item.price;
+    if (item.cost != null) {
+      totalCost += item.cost!;
+    }
     notifyListeners();
   }
 
@@ -53,7 +65,10 @@ class Ticket extends ChangeNotifier {
     if (items[item]! > 1) {
       items[item] = items[item]! - 1;
       itemCount--;
-      totalCost -= item.price;
+      totalPrice -= item.price;
+      if (item.cost != null) {
+        totalCost -= item.cost!;
+      }
       notifyListeners();
     }
   }
@@ -62,7 +77,10 @@ class Ticket extends ChangeNotifier {
     int oldQty = items[item]!;
     items[item] = qty;
     itemCount += qty - oldQty;
-    totalCost += (qty - oldQty) * item.price;
+    totalPrice += (qty - oldQty) * item.price;
+    if (item.cost != null) {
+      totalCost += (qty - oldQty) * item.cost!;
+    }
     notifyListeners();
   }
 
@@ -70,7 +88,10 @@ class Ticket extends ChangeNotifier {
     int qty = items[item]!;
     items.remove(item);
     itemCount -= qty;
-    totalCost -= (item.price * qty);
+    totalPrice -= (item.price * qty);
+    if (item.cost != null) {
+      totalCost -= (item.cost! * qty);
+    }
     notifyListeners();
   }
 

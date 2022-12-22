@@ -25,6 +25,13 @@ class CategoriesServices {
     return _boxCategory.getAll();
   }
 
+  static Stream<List<Category>> get getCategories {
+    final qBuilderTasks = _boxCategory.query();
+    return qBuilderTasks
+        .watch(triggerImmediately: true)
+        .map((query) => query.find());
+  }
+
   static void updateCategory(Category category) {
     _boxCategory.put(category, mode: PutMode.update);
   }

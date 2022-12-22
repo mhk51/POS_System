@@ -5,9 +5,9 @@ import 'package:scanner_app/models/item_list.dart';
 import 'package:scanner_app/pages/items_page/item_tile.dart';
 
 class ItemsList extends StatefulWidget {
-  final List<Item> items;
-  final Function refresh;
-  const ItemsList({super.key, required this.items, required this.refresh});
+  const ItemsList({
+    super.key,
+  });
 
   @override
   State<ItemsList> createState() => _ItemsListState();

@@ -4,10 +4,10 @@ import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/pages/add_item/barcode_button.dart';
 import 'package:scanner_app/pages/add_item/item_category_dropdown.dart';
+import 'package:scanner_app/services/categories_services.dart';
 
 class ItemDetailsContainer extends StatefulWidget {
-  final List<Category> categories;
-  const ItemDetailsContainer({super.key, required this.categories});
+  const ItemDetailsContainer({super.key});
 
   @override
   State<ItemDetailsContainer> createState() => _ItemDetailsContainerState();
@@ -100,7 +100,7 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
             ),
             const SizedBox(height: 20),
             const Text('Category'),
-            CategoryDropDown(categories: widget.categories),
+            const CategoryDropDown(),
             const SizedBox(height: 10),
             TextFormField(
               initialValue: item.price?.toString(),
@@ -108,7 +108,11 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
                 return value!.isNotEmpty ? null : "Please Enter a Price";
               },
               onChanged: (value) {
-                item.updatePrice(int.parse(value));
+                if (value == "") {
+                  item.updatePrice(0);
+                } else {
+                  item.updatePrice(int.parse(value.replaceAll(",", "")));
+                }
               },
               keyboardType: TextInputType.number,
               focusNode: priceFocus,
@@ -118,7 +122,11 @@ class _ItemDetailsContainerState extends State<ItemDetailsContainer> {
             const SizedBox(height: 20),
             TextFormField(
               onChanged: (value) {
-                item.updateCost(int.parse(value));
+                if (value == "") {
+                  item.updateCost(0);
+                } else {
+                  item.updateCost(int.parse(value.replaceAll(",", "")));
+                }
               },
               initialValue: item.cost.toString(),
               keyboardType: TextInputType.number,

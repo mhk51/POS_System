@@ -13,6 +13,7 @@ import 'package:scanner_app/pages/receipts_page/ticket_page.dart';
 import 'package:scanner_app/services/categories_services.dart';
 import 'package:scanner_app/services/items_services.dart';
 import 'package:scanner_app/services/receipt_services.dart';
+import 'package:scanner_app/services/settings_services.dart';
 import 'package:scanner_app/shared/routes.dart';
 import 'package:scanner_app/pages/support_page.dart';
 
@@ -21,6 +22,7 @@ void main() async {
   await CategoriesServices.create();
   await ItemServices.create();
   await ReceiptServices.create();
+  await SettingsServices.create();
   runApp(const MyApp());
 }
 

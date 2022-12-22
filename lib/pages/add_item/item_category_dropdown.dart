@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item_builder.dart';
+import 'package:scanner_app/services/categories_services.dart';
 
 class CategoryDropDown extends StatefulWidget {
-  final List<Category> categories;
-  const CategoryDropDown({super.key, required this.categories});
+  const CategoryDropDown({super.key});
 
   @override
   State<CategoryDropDown> createState() => _CategoryDropDownState();
@@ -17,6 +17,7 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
   @override
   Widget build(BuildContext context) {
     ItemBuilder item = Provider.of<ItemBuilder>(context);
+    List<Category> categories = CategoriesServices.getAllCategories();
     dropdownValue = item.category;
     DropdownMenuItem<Category?> dropDownMenuItem = DropdownMenuItem<Category?>(
       value: null,
@@ -24,8 +25,8 @@ class _CategoryDropDownState extends State<CategoryDropDown> {
       onTap: () => item.updateCategory(null),
     );
     List<DropdownMenuItem<Category?>> categoriesDropDown = [dropDownMenuItem];
-    categoriesDropDown.addAll(
-        widget.categories.map<DropdownMenuItem<Category>>((Category value) {
+    categoriesDropDown
+        .addAll(categories.map<DropdownMenuItem<Category>>((Category value) {
       return DropdownMenuItem<Category>(
         value: value,
         child: Text(value.name),

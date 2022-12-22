@@ -4,6 +4,7 @@ import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/item_qty.dart';
 import 'package:scanner_app/models/receipts.dart';
 import 'package:scanner_app/objectbox.g.dart';
+import 'package:scanner_app/services/settings_services.dart';
 
 class TicketPage extends StatelessWidget {
   static const String routeName = "/ticket_page";
@@ -35,6 +36,7 @@ class TicketPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool showProfit = SettingsServices.getSettings().showPrice;
     Receipt receipt = ModalRoute.of(context)!.settings.arguments as Receipt;
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +48,7 @@ class TicketPage extends StatelessWidget {
           const SizedBox(height: 50),
           Center(
             child: Text(
-              '${NumberFormat('###,###.##').format(receipt.totalCost)} L.L',
+              '${NumberFormat('###,###.##').format(showProfit ? receipt.totalPrice - receipt.totalCost : receipt.totalPrice)} L.L',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
@@ -66,11 +68,37 @@ class TicketPage extends StatelessWidget {
           ListTile(
             title: const Text(
               'Total',
+              style: TextStyle(
+                fontSize: 18,
+              ),
+            ),
+            subtitle: const Text('Cost'),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '${NumberFormat('###,###.##').format(receipt.totalPrice)} L.L',
+                ),
+                Text(
+                  '${NumberFormat('- ###,###.##').format(receipt.totalCost)} L.L',
+                ),
+              ],
+            ),
+          ),
+          const Divider(
+            thickness: 1,
+            endIndent: 20,
+            indent: 290,
+            height: 0,
+          ),
+          ListTile(
+            title: const Text(
+              'Profit',
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
-            subtitle: const Text('Cash'),
             trailing: Text(
-              '${NumberFormat('###,###.##').format(receipt.totalCost)} L.L',
+              '${NumberFormat('###,###.##').format(receipt.totalPrice - receipt.totalCost)} L.L',
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -94,7 +122,7 @@ class TicketPage extends StatelessWidget {
                 )
               ],
             ),
-          )
+          ),
         ],
       ),
     );

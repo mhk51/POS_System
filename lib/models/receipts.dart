@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:scanner_app/models/item_qty.dart';
 import 'package:scanner_app/models/ticket.dart';
 import 'package:scanner_app/objectbox.g.dart';
@@ -11,12 +10,14 @@ class Receipt {
 
   final int itemCount;
   final int totalCost;
+  final int totalPrice;
   final DateTime time;
 
   final ToMany<ItemQty> items;
   Receipt({
     required this.itemCount,
     required this.totalCost,
+    required this.totalPrice,
     required this.time,
     this.id,
     required this.items,
@@ -30,6 +31,7 @@ class Receipt {
     }
     return Receipt(
       items: ToMany<ItemQty>(items: items),
+      totalPrice: ticket.totalPrice,
       itemCount: ticket.itemCount,
       totalCost: ticket.totalCost,
       time: DateTime.now(),

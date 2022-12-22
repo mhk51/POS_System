@@ -21,7 +21,7 @@ class _CashOutState extends State<CashOut> {
   @override
   Widget build(BuildContext context) {
     Ticket ticket = ModalRoute.of(context)?.settings.arguments as Ticket;
-    cashReceived ??= ticket.totalCost;
+    cashReceived ??= ticket.totalPrice;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
@@ -46,7 +46,7 @@ class _CashOutState extends State<CashOut> {
               child: Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Text(
-                  '${NumberFormat('###,###.##').format(ticket.totalCost)} L.L',
+                  '${NumberFormat('###,###.##').format(ticket.totalPrice)} L.L',
                   style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class _CashOutState extends State<CashOut> {
                   setState(() {});
                 } catch (e) {}
               },
-              initialValue: ticket.totalCost.toString(),
+              initialValue: ticket.totalPrice.toString(),
               decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
@@ -99,7 +99,7 @@ class _CashOutState extends State<CashOut> {
                   color: Colors.grey[200],
                   border: Border.all(width: 1, color: Colors.grey[400]!),
                   borderRadius: BorderRadius.circular(3)),
-              child: cashReceived! >= ticket.totalCost
+              child: cashReceived! >= ticket.totalPrice
                   ? TextButton.icon(
                       onPressed: () async {
                         await showDialog(
@@ -118,7 +118,7 @@ class _CashOutState extends State<CashOut> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              '${NumberFormat('###,###.##').format(ticket.totalCost)} L.L',
+                                              '${NumberFormat('###,###.##').format(ticket.totalPrice)} L.L',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black,
@@ -140,7 +140,7 @@ class _CashOutState extends State<CashOut> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              '${NumberFormat('###,###.##').format(cashReceived! - ticket.totalCost)} L.L',
+                                              '${NumberFormat('###,###.##').format(cashReceived! - ticket.totalPrice)} L.L',
                                               style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.black,

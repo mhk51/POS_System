@@ -123,7 +123,7 @@
     },
     {
       "id": "4:311949754708615431",
-      "lastPropertyId": "5:4627432496685139972",
+      "lastPropertyId": "6:2427576160433008848",
       "name": "Receipt",
       "properties": [
         {
@@ -146,6 +146,11 @@
           "id": "4:79647245843032830",
           "name": "time",
           "type": 10
+        },
+        {
+          "id": "6:2427576160433008848",
+          "name": "totalPrice",
+          "type": 6
         }
       ],
       "relations": [
@@ -155,9 +160,28 @@
           "targetId": "3:5081414179245264874"
         }
       ]
+    },
+    {
+      "id": "5:5503686465859089333",
+      "lastPropertyId": "2:1196692966763398702",
+      "name": "Settings",
+      "properties": [
+        {
+          "id": "1:4295287080779848632",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1196692966763398702",
+          "name": "showPrice",
+          "type": 1
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "4:311949754708615431",
+  "lastEntityId": "5:5503686465859089333",
   "lastIndexId": "2:7599025199795592852",
   "lastRelationId": "3:101624229004863566",
   "lastSequenceId": "0:0",
