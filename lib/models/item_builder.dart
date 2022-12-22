@@ -69,6 +69,7 @@ class ItemBuilder extends ChangeNotifier {
 
   void updateColor(int color) {
     this.color = color;
+    image = null;
   }
 
   void updatePrice(int price) {
@@ -81,6 +82,7 @@ class ItemBuilder extends ChangeNotifier {
 
   void updateShape(IconData iconData) {
     shape = iconData;
+    image = null;
   }
 
   void updateCategory(Category? category) {

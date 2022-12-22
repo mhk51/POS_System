@@ -27,6 +27,7 @@ class _SelectImageState extends State<SelectImage> {
   @override
   Widget build(BuildContext context) {
     ItemBuilder item = Provider.of<ItemBuilder>(context);
+    pickedImage = item.image;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [

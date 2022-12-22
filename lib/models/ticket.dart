@@ -6,7 +6,6 @@ class Ticket extends ChangeNotifier {
   int itemCount;
   int totalCost;
   int totalPrice;
-  String searchWord;
   Category? category;
 
   Map<Item, int> items = {};
@@ -14,19 +13,14 @@ class Ticket extends ChangeNotifier {
   Ticket({
     this.itemCount = 0,
     this.totalCost = 0,
-    this.searchWord = "",
     this.totalPrice = 0,
   });
 
   void clear() {
     itemCount = 0;
     totalCost = 0;
+    totalPrice = 0;
     items = {};
-    notifyListeners();
-  }
-
-  void updateSearchWord(String searchWord) {
-    this.searchWord = searchWord;
     notifyListeners();
   }
 

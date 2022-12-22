@@ -14,7 +14,42 @@ class ReceiptTile extends StatelessWidget {
   Widget build(BuildContext context) {
     bool showProfit = SettingsServices.getSettings().showPrice;
     return ListTile(
-      onLongPress: () => ReceiptServices.deleteReceipt(receipt.id),
+      onLongPress: () async {
+        bool? result = await showDialog<bool>(
+          barrierDismissible: false,
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: const Center(
+                child: Text('Are you sure you want to delete receipt?'),
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: Text(
+                    'Yes',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, false);
+                  },
+                  child: Text(
+                    'No',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+              ],
+            );
+          },
+        );
+        if (result != null && result) {
+          ReceiptServices.deleteReceipt(receipt.id);
+        }
+      },
       onTap: () async {
         await Navigator.pushNamed(context, PageRoutes.ticketPage,
             arguments: receipt);
