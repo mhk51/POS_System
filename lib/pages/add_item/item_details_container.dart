@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/pages/add_item/barcode_button.dart';
 import 'package:scanner_app/pages/add_item/item_category_dropdown.dart';
-import 'package:scanner_app/services/categories_services.dart';
 
 class ItemDetailsContainer extends StatefulWidget {
   const ItemDetailsContainer({super.key});

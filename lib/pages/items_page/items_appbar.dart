@@ -69,7 +69,7 @@ class _ItemsAppBarState extends State<ItemsAppBar> {
                   if (barcode == '-1') {
                     return;
                   }
-                  Item? item = await ItemServices.getItembyBarcode(barcode);
+                  Item? item = ItemServices.getItembyBarcode(barcode);
                   ItemBuilder? itemBuilder;
                   if (item != null) {
                     itemBuilder = ItemBuilder.fromItem(item);

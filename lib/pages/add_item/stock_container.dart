@@ -80,9 +80,21 @@ class _StockContainerState extends State<StockContainer> {
             ),
             trackStockBool
                 ? TextFormField(
+                    validator: (value) {
+                      if (value == null) return "Please Enter Valid Number";
+                      return int.tryParse(value) != null
+                          ? null
+                          : "Please Enter Valid Number";
+                    },
                     initialValue: item.stockCount?.toString(),
                     onChanged: (value) {
-                      item.updateStock(int.parse(value));
+                      if (value == "") {
+                        item.updateStock(0);
+                      } else {
+                        try {
+                          item.updateStock(int.parse(value));
+                        } catch (e) {}
+                      }
                     },
                     keyboardType: TextInputType.number,
                     focusNode: stockCountFocus,

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:objectbox/objectbox.dart';
 import 'package:scanner_app/objectbox.g.dart';
 
@@ -16,14 +15,6 @@ class Category {
     this.items = 0,
     this.id,
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      "name": name,
-      'color': color,
-      'items': items,
-    };
-  }
 
   @override
   String toString() {

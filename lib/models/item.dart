@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item_builder.dart';
@@ -14,7 +12,7 @@ class Item {
   final String? barcode;
   final int price;
   final int? cost;
-  final int? stockCount;
+  int? stockCount;
   final int color;
   final int shape;
   final String? image;
@@ -50,20 +48,6 @@ class Item {
       shape: itemBuilder.shape.codePoint,
       category: itemBuilder.category,
     );
-  }
-
-  Map<String, dynamic> toMap() {
-    return {
-      "barcode": barcode,
-      "name": name,
-      "price": price,
-      "cost": cost,
-      "stock": stockCount,
-      'color': color,
-      "category": category.target?.name,
-      "shape": shape,
-      "image": image,
-    };
   }
 
   @override

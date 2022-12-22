@@ -3,8 +3,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/receipts.dart';
 import 'package:scanner_app/models/ticket.dart';
+import 'package:scanner_app/services/items_services.dart';
 import 'package:scanner_app/services/receipt_services.dart';
 
 class CashOut extends StatefulWidget {
@@ -161,6 +163,41 @@ class _CashOutState extends State<CashOut> {
                         );
                         Receipt receipt = Receipt.fromTicket(ticket);
                         ReceiptServices.insertReceipt(receipt);
+                        List<Item> outofStockItems =
+                            ItemServices.updateStock(receipt.items);
+                        if (outofStockItems.isNotEmpty) {
+                          await showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text(
+                                        'The following Items are out of stock'),
+                                    const SizedBox(height: 20),
+                                    ...outofStockItems
+                                        .map((e) => Text(e.name))
+                                        .toList(),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        'OK',
+                                        style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor),
+                                      ))
+                                ],
+                              );
+                            },
+                          );
+                        }
                         ticket.clear();
                         if (!mounted) return;
                         Navigator.pop(context);

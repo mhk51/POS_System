@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:scanner_app/models/category.dart';
 import 'package:scanner_app/models/item.dart';
 import 'package:scanner_app/models/item_builder.dart';
 import 'package:scanner_app/pages/add_item/delete_item.dart';
 import 'package:scanner_app/pages/add_item/item_representation.dart';
 import 'package:scanner_app/pages/add_item/stock_container.dart';
-import 'package:scanner_app/services/categories_services.dart';
-import 'package:scanner_app/services/items_services.dart';
-import 'package:scanner_app/shared/loading.dart';
 
 import 'item_details_container.dart';
 

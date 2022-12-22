@@ -83,12 +83,20 @@ class _ControlBarState extends State<ControlBar> {
                               onPressed: () {
                                 Navigator.pop(context, false);
                               },
-                              child: const Text('No')),
+                              child: Text(
+                                'No',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              )),
                           TextButton(
                               onPressed: () {
                                 Navigator.pop(context, true);
                               },
-                              child: const Text('Yes'))
+                              child: Text(
+                                'Yes',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ))
                         ],
                       );
                     },

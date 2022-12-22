@@ -3,6 +3,7 @@
 // import 'package:flutter/material.dart';
 
 import 'package:scanner_app/models/item.dart';
+import 'package:scanner_app/models/item_qty.dart';
 import 'package:scanner_app/objectbox.g.dart';
 import 'package:scanner_app/services/open_store.dart';
 
@@ -39,6 +40,24 @@ class ItemServices {
       return _boxItem.get(id);
     }
     return null;
+  }
+
+  static List<Item> updateStock(List<ItemQty> items) {
+    List<Item> outofStockItems = [];
+    for (ItemQty itemQty in items) {
+      Item item = itemQty.item.target!;
+      if (item.stockCount != null) {
+        item.stockCount = item.stockCount! - itemQty.qty;
+        if (item.stockCount! > 0) {
+          _boxItem.put(item, mode: PutMode.update);
+        } else {
+          item.stockCount = 0;
+          _boxItem.put(item, mode: PutMode.update);
+          outofStockItems.add(item);
+        }
+      }
+    }
+    return outofStockItems;
   }
 
   static Stream<List<Item>> get getItems {
